@@ -1,8 +1,8 @@
 // Import required modules
 const express = require('express');
 const cors = require('cors');
-const userRoutes = require('./routers/UserRouter'); 
-const postRoutes = require('./routers/PostRouter');
+const userRouter = require('./routers/UserRouter'); 
+const postRouter = require('./routers/PostRouter');
 
 
 // Initialize the app
@@ -14,8 +14,8 @@ app.use(cors()); // Enable Cross-Origin Resource Sharing
 
 
 // Define routes
-app.use('/users', userRoutes); // Routes for user management
-app.use('/posts', postRoutes); // Routes for posts (like creating, deleting posts)
+app.use('/user', userRouter); // Routes for user management
+app.use('/post', postRouter); // Routes for posts (like creating, deleting posts)
 
 // Home route
 app.get('/', (req, res) => {

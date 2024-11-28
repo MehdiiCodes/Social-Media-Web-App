@@ -17,7 +17,16 @@ const AddPost = () => {
         },
         onSubmit: (values, { resetForm, setSubmitting }) => {
             console.log(values);
-            
+            axios.post('http://localhost:5000/user/post', values)
+                .then((result) => {
+                    toast.success('User Registered Successfully');
+                    resetForm();
+                    // router.push('/login');
+                }).catch((err) => {
+                    console.log(err);
+                    toast.error(err?.response?.data?.message || 'Semething went Wrong');
+                    setSubmitting(false);
+                });
         }
     });
 
