@@ -13,16 +13,16 @@ const SignupSchema = Yup.object().shape({
     .max(50, 'Too Long!')
     .required('Name is Required'),
 
-  email: Yup.string().email('Email toh likhoo').required('Email toh likhoo'),
-  password: Yup.string().required('Password toh dalo')
+  email: Yup.string().email('Email is required').required('Email is required'),
+  password: Yup.string().required('Password is required')
   .matches(/[a-z]/, 'lowercase letter is required')
   .matches(/[A-Z]/, 'uppercase letter is required')
   .matches(/[0-9]/, 'number is required')
-  .matches(/[\W]/, 'ek speical character bhi likhoo')
-  .min(8, 'kam se kam 8 characters likho'),
+  .matches(/[\W]/, 'speical character is required')
+  .min(8, 'minimum 8 characters is required'),
 
-  confirmPassword: Yup.string().required('Password confirm karo')
-    .oneOf([Yup.ref('password'), null], 'Password match karao')
+  confirmPassword: Yup.string().required('Password is Required')
+    .oneOf([Yup.ref('password'), null], "Password dosen't match")
 });
 
 const Signup = () => {
