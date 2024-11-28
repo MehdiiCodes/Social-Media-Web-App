@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
+const { Schema, model } = require('../connection');
 
-const UserSchema = new mongoose.Schema(
-  {
+const mySchema = new Schema ({ 
     username: {
       type: String,
       required: [true, "Username is required"],
@@ -18,12 +17,11 @@ const UserSchema = new mongoose.Schema(
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
         "Please provide a valid email address",
       ],
-      
     },
     password: {
       type: String,
       required: [true, "Password is required"],
-      minlength: [6, "Password must be at least 6 characters long"],
+      minlength: [8, "Password must be at least 8 characters long"],
       select: false, // Exclude password from query results by default
     },
     profilePicture: {
@@ -39,24 +37,7 @@ const UserSchema = new mongoose.Schema(
       maxlength: [160, "Bio must be at most 160 characters long"],
       default: "",
     },
-    followers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User", // Reference to another user
-      },
-    ],
-    following: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
-    posts: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Post", // Reference to the Post model
-      },
-    ],
+    
     isAdmin: {
       type: Boolean,
       default: false, // Flag for admin users
@@ -72,9 +53,9 @@ const UserSchema = new mongoose.Schema(
   },
   {
     timestamps: true, // Automatically create `createdAt` and `updatedAt`
-    collection: "users", // Specify the collection name
-  }
-);
+    collection: "users", // Specify the collection name 
+  });
+
 
 // Ensure the model is not re-compiled on hot reloads
-export default mongoose.models.User || mongoose.model("User", UserSchema);
+module.exports = model('users', mySchema);

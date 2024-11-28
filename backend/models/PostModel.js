@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
+const { Schema, model } = require('../connection');
 
-const PostSchema = new mongoose.Schema(
-  {
+const mySchema = new Schema({
     title: {
       type: String,
       required: [true, "Post title is required"],
@@ -46,5 +45,5 @@ const PostSchema = new mongoose.Schema(
 );
 
 // Ensure the model is not re-compiled on hot reloads
-export default mongoose.models.Post || mongoose.model("Post", PostSchema);
+module.exports = model('posts', mySchema);
 

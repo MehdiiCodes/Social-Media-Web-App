@@ -17,7 +17,7 @@ const AddPost = () => {
         },
         onSubmit: (values, { resetForm, setSubmitting }) => {
             console.log(values);
-
+            
         }
     });
 

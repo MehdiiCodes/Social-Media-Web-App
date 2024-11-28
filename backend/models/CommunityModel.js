@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
+const { Schema, model } = require('../connection');
 
-const CommunitySchema = new mongoose.Schema(
-  {
+const mySchema = new Schema({
     title: {
       type: String,
       required: [true, "Community title is required"],
@@ -24,4 +23,4 @@ const CommunitySchema = new mongoose.Schema(
 );
 
 // Ensure the model is not re-compiled on hot reloads
-export default mongoose.models.Community || mongoose.model("Community", CommunitySchema);
+module.exports = model('community', mySchema);
