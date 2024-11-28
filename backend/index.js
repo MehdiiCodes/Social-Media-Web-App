@@ -14,8 +14,8 @@ app.use(cors()); // Enable Cross-Origin Resource Sharing
 
 
 // Define routes
-app.use('/user', userRouter); // Routes for user management
-app.use('/post', postRouter); // Routes for posts (like creating, deleting posts)
+app.use('/user', userRouter); // Routers for user management
+app.use('/post', postRouter); // Routers for posts (like creating, deleting posts)
 
 // Home route
 app.get('/', (req, res) => {
