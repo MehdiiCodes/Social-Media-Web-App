@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
+import toast from "react-hot-toast";
 
 const AddPost = () => {
 
