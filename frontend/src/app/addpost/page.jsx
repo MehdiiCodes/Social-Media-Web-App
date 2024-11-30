@@ -105,7 +105,7 @@ const AddPost = () => {
                     disabled={loading}
                     style={loading ? styles.buttonDisabled : styles.button}
                 >
-                    {loading ? "Submitting..." : "Create Post"}
+                    {loading ? "Uploading..." : "Create Post"}
                 </button>
             </form>
             {message && <p style={styles.message}>{message}</p>}

@@ -66,7 +66,7 @@ router.put('/update/:id', (req, res) => {
         });
 });
 
-// delete
+// delete 
 router.delete('/delete/:id', (req, res) => {
     Model.findByIdAndDelete(req.params.id)
         .then((result) => {
