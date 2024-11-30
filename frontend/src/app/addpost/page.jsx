@@ -22,7 +22,7 @@ const AddPost = () => {
                 .then((result) => {
                     toast.success('User Registered Successfully');
                     resetForm();
-                    // router.push('/login');l
+                    router.push('/feed');
                 }).catch((err) => {
                     console.log(err);
                     toast.error(err?.response?.data?.message || 'Semething went Wrong');
