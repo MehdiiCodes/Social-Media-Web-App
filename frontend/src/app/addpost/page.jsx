@@ -59,9 +59,9 @@ const AddPost = () => {
                 </div>
 
                 <div style={styles.field}>
-                    <label htmlFor="image" style={styles.label}>Image URL</label>
+                    <label htmlFor="image" style={styles.label}>Post</label>
                     <input
-                        type="files"
+                        type="file"
                         id="image"
                         value={postForm.image}
                         onChange={postForm.handleChange}
