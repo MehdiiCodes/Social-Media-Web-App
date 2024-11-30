@@ -66,7 +66,7 @@ const AddPost = () => {
                         id="image"
                         value={postForm.image}
                         onChange={postForm.handleChange}
-                        placeholder="Paste the image URL"
+                        placeholder="Upload the Post"
                         required
                         style={styles.input}
                     />
