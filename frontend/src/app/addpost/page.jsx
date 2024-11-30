@@ -21,7 +21,7 @@ const AddPost = () => {
                 .then((result) => {
                     toast.success('User Registered Successfully');
                     resetForm();
-                    // router.push('/login');
+                    // router.push('/login');l
                 }).catch((err) => {
                     console.log(err);
                     toast.error(err?.response?.data?.message || 'Semething went Wrong');
