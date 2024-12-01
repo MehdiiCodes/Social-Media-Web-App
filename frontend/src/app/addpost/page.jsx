@@ -13,6 +13,7 @@ const AddPost = () => {
         initialValues: {
             title: '',
             caption: '',
+            image: '',
             postedBy: '',
             community: ''
         },
@@ -20,7 +21,7 @@ const AddPost = () => {
             console.log(values);
             axios.post('http://localhost:5000/user/post', values)
                 .then((result) => {
-                    toast.success('User Registered Successfully');
+                    toast.success('Post Uploaded Successfully');
                     resetForm();
                     router.push('/feed');
                 }).catch((err) => {
