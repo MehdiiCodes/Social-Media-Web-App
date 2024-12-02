@@ -118,75 +118,114 @@ const styles = {
     container: {
         maxWidth: "500px",
         margin: "50px auto",
-        padding: "20px",
+        padding: "30px",
         fontFamily: "'Poppins', sans-serif",
-        borderRadius: "10px",
-        background: "linear-gradient(135deg, #f8f9fa, #e9ecef)",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        borderRadius: "15px",
+        background: "linear-gradient(180deg, #e0f7fa, #ffffff)", // Pastel gradient background
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
+        animation: "fadeIn 0.5s",
     },
     heading: {
         textAlign: "center",
         marginBottom: "20px",
-        color: "#343a40",
-        fontSize: "24px",
-        fontWeight: "600",
+        color: "#333",
+        fontSize: "34px",
+        fontWeight: "700",
+        textShadow: "1px 1px 1px rgba(255, 255, 255, 0.9)", // Softer text shadow
     },
     form: {
         display: "flex",
         flexDirection: "column",
-        gap: "15px",
+        gap: "20px",
     },
     field: {
         display: "flex",
         flexDirection: "column",
     },
     label: {
-        fontWeight: "500",
+        fontWeight: "600",
         marginBottom: "5px",
-        color: "#495057",
+        color: "#555", // Soft gray for labels
     },
     input: {
-        padding: "10px",
-        borderRadius: "5px",
-        border: "1px solid #ced4da",
-        fontSize: "14px",
-        transition: "border-color 0.2s",
+        padding: "14px",
+        borderRadius: "10px",
+        border: "2px solid #b2ebf2",
+        fontSize: "16px",
+        transition: "border-color 0.3s, box-shadow 0.3s",
+        outline: "none",
+        backgroundColor: "#ffffff", // White background for inputs
+    },
+    inputFocus: {
+        borderColor: "#80deea", // Light teal on focus
+        boxShadow: "0 0 5px rgba(128, 222, 234, 0.5)", // Soft teal shadow on focus
     },
     textarea: {
-        padding: "10px",
-        borderRadius: "5px",
-        border: "1px solid #ced4da",
-        fontSize: "14px",
+        padding: "14px",
+        borderRadius: "10px",
+        border: "2px solid #b2ebf2",
+        fontSize: "16px",
         resize: "none",
-        height: "80px",
-        transition: "border-color 0.2s",
+        height: "120px",
+        transition: "border-color 0.3s, box-shadow 0.3s",
+        outline: "none",
+        backgroundColor: "#ffffff",
+    },
+    textareaFocus: {
+        borderColor: "#80deea",
+        boxShadow: "0 0 5px rgba(128, 222, 234, 0.5)",
     },
     button: {
-        padding: "12px",
+        padding: "15px",
         border: "none",
-        borderRadius: "5px",
-        background: "#007bff",
+        borderRadius: "10px",
+        background: "#4db6ac", // Soft teal button
         color: "#fff",
-        fontWeight: "500",
+        fontWeight: "600",
         cursor: "pointer",
-        transition: "background-color 0.3s",
+        transition: "background-color 0.3s, transform 0.2s",
+        fontSize: "16px",
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+    },
+    buttonHover: {
+        background: "#26a69a", // Darker teal on hover
+        transform: "scale(1.05)", // Slight grow on hover
     },
     buttonDisabled: {
-        padding: "12px",
+        padding: "15px",
         border: "none",
-        borderRadius: "5px",
-        background: "#6c757d",
+        borderRadius: "10px",
+        background: "#ccc",
         color: "#fff",
-        fontWeight: "500",
+        fontWeight: "600",
         cursor: "not-allowed",
     },
     message: {
         textAlign: "center",
         marginTop: "20px",
+        fontSize: "18px",
+        fontWeight: "600",
+        color: "#4db6ac", // Soft teal message color
+    },
+    errorMessage: {
+        textAlign: "center",
+        marginTop: "10px",
         fontSize: "16px",
-        fontWeight: "500",
-        color: "#28a745",
+        fontWeight: "600",
+        color: "#f44336", // Red for error messages
     },
 };
+
+// Keyframes for fade-in animation
+const fadeIn = `
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+`;
 
 export default AddPost;
