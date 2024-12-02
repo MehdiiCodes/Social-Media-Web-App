@@ -103,7 +103,7 @@ const AddPost = () => {
 
                 <button
                     type="submit"
-                    // disabled={loading}
+                    disabled={loading}
                     style={loading ? styles : styles.button}
                 >
                     {loading ? "Uploading..." : "Create Post"}
