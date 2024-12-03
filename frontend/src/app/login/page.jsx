@@ -13,7 +13,7 @@ const login = () => {
             Don't have an account yet?
             <a
               className="text-green-500 hover:underline font-medium"
-              href="../examples/html/signup.html"
+              href="../signup"
             >
               Sign up here
             </a>
