@@ -1,46 +1,145 @@
 import React from 'react'
+import classes from './login.module.css'
 
-const Login = () => {
+const login = () => {
   return (
-    <div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-    <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-      <div
-        class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
-      </div>
-      <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-  
-        <div class="max-w-md mx-auto">
-          <div>
-            <h1 class="text-2xl font-semibold">Login</h1>
-          </div>
-          <div class="divide-y divide-gray-200">
-            <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-              <div class="relative">
-                <input autocomplete="off" id="email" name="email" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
-                <label for="email" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
-              </div>
-              <div class="relative">
-                <input autocomplete="off" id="password" name="password" type="password" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Password" />
-                <label for="password" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
-              </div>
-              <div class="relative">
-                <button class="bg-cyan-500 text-white rounded-md px-2 py-1">Submit</button>
-              </div>
-            </div>
-          </div>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-green-50 to-green-100">
+      <div className="mt-7 bg-white border border-gray-300 rounded-xl shadow-lg p-6 sm:p-8">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-gray-800">
+            Sign in
+          </h1>
+          <p className="mt-2 text-sm text-gray-600">
+            Don't have an account yet?
+            <a
+              className="text-green-500 hover:underline font-medium"
+              href="../examples/html/signup.html"
+            >
+              Sign up here
+            </a>
+          </p>
         </div>
-  
-        <div class="w-full flex justify-center">
-          <button class="flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-            {/* <svg class="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="-0.5 0 48 48" version="1.1"> <title>Google-color</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Color-" transform="translate(-401.000000, -860.000000)"> <g id="Google" transform="translate(401.000000, 860.000000)"> <path d="M9.82727273,24 C9.82727273,22.4757333 10.0804318,21.0144 10.5322727,19.6437333 L2.62345455,13.6042667 C1.08206818,16.7338667 0.213636364,20.2602667 0.213636364,24 C0.213636364,27.7365333 1.081,31.2608 2.62025,34.3882667 L10.5247955,28.3370667 C10.0772273,26.9728 9.82727273,25.5168 9.82727273,24" id="Fill-1" fill="#FBBC05"> </path> <path d="M23.7136364,10.1333333 C27.025,10.1333333 30.0159091,11.3066667 32.3659091,13.2266667 L39.2022727,6.4 C35.0363636,2.77333333 29.6954545,0.533333333 23.7136364,0.533333333 C14.4268636,0.533333333 6.44540909,5.84426667 2.62345455,13.6042667 L10.5322727,19.6437333 C12.3545909,14.112 17.5491591,10.1333333 23.7136364,10.1333333" id="Fill-2" fill="#EB4335"> </path> <path d="M23.7136364,37.8666667 C17.5491591,37.8666667 12.3545909,33.888 10.5322727,28.3562667 L2.62345455,34.3946667 C6.44540909,42.1557333 14.4268636,47.4666667 23.7136364,47.4666667 C29.4455,47.4666667 34.9177955,45.4314667 39.0249545,41.6181333 L31.5177727,35.8144 C29.3995682,37.1488 26.7323182,37.8666667 23.7136364,37.8666667" id="Fill-3" fill="#34A853"> </path> <path d="M46.1454545,24 C46.1454545,22.6133333 45.9318182,21.12 45.6113636,19.7333333 L23.7136364,19.7333333 L23.7136364,28.8 L36.3181818,28.8 C35.6879545,31.8912 33.9724545,34.2677333 31.5177727,35.8144 L39.0249545,41.6181333 C43.3393409,37.6138667 46.1454545,31.6490667 46.1454545,24" id="Fill-4" fill="#4285F4"> </path> </g> </g> </g> </svg> */}
-            <span>Continue with Google</span>
+        <div className="mt-5">
+          <button
+            type="button"
+            className="w-full py-3 px-4 flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-300 bg-gradient-to-r from-green-400 to-green-500 text-white shadow hover:from-green-500 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+          >
+            <svg
+              className="w-5 h-auto"
+              width={46}
+              height={47}
+              viewBox="0 0 46 47"
+              fill="none"
+            >
+              <path
+                d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z"
+                fill="#4285F4"
+              />
+              <path
+                d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z"
+                fill="#34A853"
+              />
+              <path
+                d="M10.1212 28.1413C9.62245 26.6725 9.32908 25.1156 9.32908 23.5C9.32908 21.8844 9.62245 20.3275 10.0918 18.8588V18.5356L2.75765 12.8369L2.52296 12.9544C0.909439 16.1269 0 19.7106 0 23.5C0 27.2894 0.909439 30.8731 2.49362 34.0456L10.1212 28.1413Z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z"
+                fill="#EB4335"
+              />
+            </svg>
+            Sign in with Google
           </button>
+          <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">
+            Or
+          </div>
+          {/* Form */}
+          <form>
+            <div className="grid gap-y-4">
+              {/* Form Group */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm mb-2 text-gray-700"
+                >
+                  Email address
+                </label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-green-500 focus:ring-green-500 dark:bg-gray-50 dark:border-gray-300 dark:text-gray-700 dark:placeholder-gray-500"
+                    required=""
+                    aria-describedby="email-error"
+                  />
+                </div>
+                <p className="hidden text-xs text-red-600 mt-2" id="email-error">
+                  Please include a valid email address so we can get back to you
+                </p>
+              </div>
+              {/* End Form Group */}
+              {/* Form Group */}
+              <div>
+                <div className="flex justify-between items-center">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm mb-2 text-gray-700"
+                  >
+                    Password
+                  </label>
+                  <a
+                    className="inline-flex items-center gap-x-1 text-sm text-green-500 hover:underline"
+                    href="../examples/html/recover-account.html"
+                  >
+                    Forgot password?
+                  </a>
+                </div>
+                <div className="relative">
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-green-500 focus:ring-green-500 dark:bg-gray-50 dark:border-gray-300 dark:text-gray-700 dark:placeholder-gray-500"
+                    required=""
+                    aria-describedby="password-error"
+                  />
+                </div>
+                <p className="hidden text-xs text-red-600 mt-2" id="password-error">
+                  8+ characters required
+                </p>
+              </div>
+              {/* End Form Group */}
+              {/* Checkbox */}
+              <div className="flex items-center">
+                <div className="flex">
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    className="shrink-0 mt-0.5 border-gray-300 rounded text-green-600 focus:ring-green-500"
+                  />
+                </div>
+                <div className="ms-3">
+                  <label htmlFor="remember-me" className="text-sm text-gray-700">
+                    Remember me
+                  </label>
+                </div>
+              </div>
+              {/* End Checkbox */}
+              <button
+                type="submit"
+                className="w-full py-3 px-4 flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-gradient-to-r from-green-400 to-green-500 text-white hover:from-green-500 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+              >
+                Sign in
+              </button>
+            </div>
+          </form>
+          {/* End Form */}
         </div>
-  
       </div>
     </div>
-  </div>
   )
-}
+};
 
-export default Login
+export default login;
