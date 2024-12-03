@@ -72,7 +72,7 @@ const Signup = () => {
               Already have an account?
               <a
                 className="text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500"
-                href="../examples/html/signin.html"
+                href="../login"
               >
                 Sign in here
               </a>
