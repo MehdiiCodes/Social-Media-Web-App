@@ -1,7 +1,32 @@
 import React from 'react'
 import classes from './login.module.css'
+import { useFormik } from 'formik';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const login = () => {
+  
+  const loginForm = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+
+    onSubmit: (values) => {
+
+      console.log(values);
+      
+      axios.post('https://localhost:5000/user/authenticate', values)
+      .then((response) => {
+        toast.success('Login Success');
+        localStorage.setItem('token', response.data.token);
+      }).catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message)
+      });
+    }
+  })
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-green-50 to-green-100">
       <div className="mt-7 bg-white border border-gray-300 rounded-xl shadow-lg p-6 sm:p-8">
@@ -54,7 +79,7 @@ const login = () => {
             Or
           </div>
           {/* Form */}
-          <form>
+          <form onSubmit={loginForm.handleSubmit}>
             <div className="grid gap-y-4">
               {/* Form Group */}
               <div>
@@ -69,6 +94,8 @@ const login = () => {
                     type="email"
                     id="email"
                     name="email"
+                    onChange={loginForm}
+                    value={}
                     className="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-green-500 focus:ring-green-500 dark:bg-gray-50 dark:border-gray-300 dark:text-gray-700 dark:placeholder-gray-500"
                     required=""
                     aria-describedby="email-error"

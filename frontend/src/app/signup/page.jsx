@@ -8,7 +8,8 @@ import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 
 const SignupSchema = Yup.object().shape({
-  name: Yup.string()
+
+  username: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Name is Required'),
@@ -35,7 +36,7 @@ const Signup = () => {
   // initializing formik
   const signupForm = useFormik({
     initialValues: {
-      name: '',
+      username: '',
       email: '',
       password: '',
       confirmPassword: ''
@@ -132,9 +133,9 @@ const Signup = () => {
                   <div className="relative">
                     <input
                       type="text"
-                      id="name"
+                      id="username"
                       onChange={signupForm.handleChange}
-                      value={signupForm.values.name}
+                      value={signupForm.values.username}
                       className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                       required=""
                       aria-describedby="email-error"
@@ -153,9 +154,9 @@ const Signup = () => {
                     </div>
                   </div>
                   {
-                    (signupForm.errors.name && signupForm.touched.name) && (
+                    (signupForm.errors.username && signupForm.touched.username) && (
                       <p className="text-xs text-red-600 mt-2" id="email-error">
-                        {signupForm.errors.name}
+                        {signupForm.errors.username}
                       </p>
                     )
                   }
