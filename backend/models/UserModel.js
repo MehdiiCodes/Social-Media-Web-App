@@ -24,29 +24,11 @@ const mySchema = new Schema ({
       minlength: [8, "Password must be at least 8 characters long"],
       select: false, // Exclude password from query results by default
     },
-    profilePicture: {
-      type: String, // URL to the profile picture
-      default: "default-profile.png",
-    },
-    coverPhoto: {
-      type: String, // URL to the cover photo
-      default: "default-cover.jpg",
-    },
-    bio: {
-      type: String,
-      maxlength: [160, "Bio must be at most 160 characters long"],
-      default: "",
-    },
-    
     isAdmin: {
       type: Boolean,
       default: false, // Flag for admin users
     },
     createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
       type: Date,
       default: Date.now,
     },

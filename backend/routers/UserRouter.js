@@ -17,7 +17,7 @@ router.post('/add', (req, res) => {
             if(err?.code === 11000) {
                 res.status(500).json({ message: 'Email already registered' });
             } else {
-                res.status(500).json({ message: 'Internal Server Error' });
+                res.status(500).json({ message: 'Internal Server ' });
             }
         });
 });

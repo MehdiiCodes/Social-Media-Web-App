@@ -13,13 +13,16 @@ const SignupSchema = Yup.object().shape({
     .max(50, 'Too Long!')
     .required('Name is Required'),
 
-  email: Yup.string().email('Email is required').required('Email is required'),
+  email: Yup.string()
+    .email('Email is required')
+    .required('Email is required'),
+
   password: Yup.string().required('Password is required')
-  .matches(/[a-z]/, 'lowercase letter is required')
-  .matches(/[A-Z]/, 'uppercase letter is required')
-  .matches(/[0-9]/, 'number is required')
-  .matches(/[\W]/, 'speical character is required')
-  .min(8, 'minimum 8 characters is required'),
+    .matches(/[a-z]/, 'lowercase letter is required')
+    .matches(/[A-Z]/, 'uppercase letter is required')
+    .matches(/[0-9]/, 'number is required')
+    .matches(/[\W]/, 'speical character is required')
+    .min(8, 'minimum 8 characters is required'),
 
   confirmPassword: Yup.string().required('Password is Required')
     .oneOf([Yup.ref('password'), null], "Password dosen't match")
@@ -37,23 +40,26 @@ const Signup = () => {
       password: '',
       confirmPassword: ''
     },
+
     onSubmit: (values, { resetForm, setSubmitting }) => {
-      
+
+      console.log(values);
+
       // setTimeout(() => {
-      //   console.log(values);
       //   resetForm();
       // }, 2000);/
 
-    axios.post('http://localhost:5000/user/add', values)
-    .then((result) => {
-      toast.success('User Registered Successfully');
-      resetForm();
-      // router.push('/login');
-    }).catch((err) => {
-      console.log(err);
-      toast.error( err?.response?.data?.message || 'Semething went Wrong' );
-      setSubmitting(false);
-    });
+      axios.post('http://localhost:5000/user/add', values)
+        .then((response) => {
+          console.log(response.status);
+          resetForm();
+          toast.success('User Registered Successfully');
+          router.push('/login');
+        }).catch((err) => {
+          console.log(err);
+          toast.error(err?.response?.data?.message || 'Semething went Wrong');
+          setSubmitting(false);
+        });
 
       // send values to backend
     },
@@ -149,8 +155,8 @@ const Signup = () => {
                   {
                     (signupForm.errors.name && signupForm.touched.name) && (
                       <p className="text-xs text-red-600 mt-2" id="email-error">
-                    {signupForm.errors.name}
-                  </p>
+                        {signupForm.errors.name}
+                      </p>
                     )
                   }
                 </div>
@@ -189,8 +195,8 @@ const Signup = () => {
                   {
                     (signupForm.errors.email && signupForm.touched.email) && (
                       <p className="text-xs text-red-600 mt-2" id="email-error">
-                    {signupForm.errors.email}
-                  </p>
+                        {signupForm.errors.email}
+                      </p>
                     )
                   }
                 </div>
@@ -229,8 +235,8 @@ const Signup = () => {
                   {
                     (signupForm.errors.password && signupForm.touched.password) && (
                       <p className="text-xs text-red-600 mt-2" id="email-error">
-                    {signupForm.errors.password}
-                  </p>
+                        {signupForm.errors.password}
+                      </p>
                     )
                   }
                 </div>
@@ -269,8 +275,8 @@ const Signup = () => {
                   {
                     (signupForm.errors.confirmPassword && signupForm.touched.confirmPassword) && (
                       <p className="text-xs text-red-600 mt-2" id="email-error">
-                    {signupForm.errors.confirmPassword}
-                  </p>
+                        {signupForm.errors.confirmPassword}
+                      </p>
                     )
                   }
                 </div>
@@ -303,8 +309,8 @@ const Signup = () => {
                   disabled={signupForm.isSubmitting}
                   className="flex item-center gap-3 w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
                 >
-                  { signupForm.isSubmitting ? <IconLoader3  className='animate-spin' /> : <IconCheck /> }
-                  { signupForm.isSubmitting ? 'Submittimg...' : 'Sign Up' }
+                  {signupForm.isSubmitting ? <IconLoader3 className='animate-spin' /> : <IconCheck />}
+                  {signupForm.isSubmitting ? 'Submittimg...' : 'Sign Up'}
                 </button>
               </div>
             </form>
