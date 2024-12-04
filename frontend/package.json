@@ -21,6 +21,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "daisyui": "^4.12.14",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",
