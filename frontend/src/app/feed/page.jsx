@@ -86,7 +86,7 @@ const Feed = ({ selCommunity }) => {
                 <div>
                   <p className="font-semibold text-black dark:text-white">{post.userName || 'Anonymous'}</p>
                   <ul className="text-xs text-gray-500 dark:text-neutral-400">
-                    <li>{formatDate(post.createdAt)}</li>
+                    <li></li>
 
                   </ul>
                 </div>

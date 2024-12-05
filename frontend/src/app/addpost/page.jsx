@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
+import { IconCheck, IconLoader3 } from "@tabler/icons-react";
 
 const AddPost = () => {
 
@@ -19,7 +20,7 @@ const AddPost = () => {
         },
         onSubmit: (values, { resetForm, setSubmitting }) => {
             console.log(values);
-            axios.post('http://localhost:5000/user/post', values)
+            axios.post('http://localhost:5000/post/add', values)
                 .then((result) => {
                     toast.success('Post Uploaded Successfully');
                     resetForm();
@@ -125,12 +126,13 @@ const AddPost = () => {
                 </div>
 
                 <button
-                    type="submit"
-                    disabled={loading}
-                    style={loading ? styles : styles.button}
-                >
-                    {loading ? "Uploading..." : "Create Post"}
-                </button>
+              type="submit"
+              disabled={postForm.isSubmitting || !postForm.values.image}
+              className="flex items-center justify-center gap-3 w-full py-3 px-4 mt-3 text-sm font-medium rounded-lg bg-blue-700 text-white hover:bg-blue-800  "
+            >
+              {postForm.isSubmitting ? <IconLoader3 className="animate-spin" /> : <IconCheck />}
+              {postForm.isSubmitting ? 'Submitting...' : 'Post'}
+            </button>
             </form>
             {message && <p style={styles.message}>{message}</p>}
         </div>

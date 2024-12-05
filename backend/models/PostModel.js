@@ -29,12 +29,12 @@ const mySchema = new Schema({
       default: Date.now, // Automatically sets the creation time
     },
     postedBy: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "User", // Reference to the User model
       required: [true, "Posted by user is required"],
     },
     community: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "Community", // Reference to the Community model
       required: [true, "Community is required"],
     },
