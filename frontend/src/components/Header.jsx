@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { IconBellRingingFilled, IconCampfireFilled, IconSearch, IconSun, IconMoon } from '@tabler/icons-react';
+import { IconBellRingingFilled, IconCampfireFilled, IconSearch, IconSun, IconMoon, IconCode } from '@tabler/icons-react';
 
 const Header = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -39,8 +39,8 @@ const Header = () => {
         <div className="flex items-center justify-between w-full sm:w-auto mb-4 sm:mb-0">
           <Link href="./">
             <h2 className="text-4xl font-bold flex items-center space-x-2 text-blue-600 dark:text-orange-500">
-              <IconCampfireFilled stroke={2} className="h-14 w-14 text-orange-500 dark:text-orange-300" />
-              <span className="ml-2 hidden sm:block">BonFire</span>
+              <IconCode stroke={2} className="h-14 w-14 text-red-500 dark:text-red-300" />
+              <span className="ml-2 hidden sm:block">MehdiiCodes</span>
             </h2>
           </Link>
         </div>
@@ -54,10 +54,10 @@ const Header = () => {
         <Link href="./" className="px-4 py-2 font-semibold text-black dark:text-white ">
              Home
             </Link>
-        <Link href="/Createpost" className="px-4 py-2 font-semibold text-black dark:text-white ">
+        <Link href="/addpost" className="px-4 py-2 font-semibold text-black dark:text-white ">
               Add Post
             </Link>
-        <Link href="/manage-community" className="px-4 py-2 font-semibold text-black dark:text-white ">
+        <Link href="/managecommunity" className="px-4 py-2 font-semibold text-black dark:text-white ">
              Create community
             </Link>
         </div>

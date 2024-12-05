@@ -8,7 +8,7 @@ const AddPost = () => {
 
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
-
+    const [previewUrl, setPreviewUrl] = useState('');
     const postForm = useFormik({
         initialValues: {
             title: '',
@@ -31,6 +31,21 @@ const AddPost = () => {
                 });
         }
     });
+    const uploadImage = async (e) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+    
+        formData.append('file', file);
+        formData.append('upload_preset', 'mehdiicodes');
+        formData.append('cloud_name', 'dpys6yu2j');
+    
+        const res = await axios.post('https://api.cloudinary.com/v1_1/dpys6yu2j/image/upload', formData);
+        if (res.status === 200) {
+          postForm.setFieldValue('image', res.data.url);
+          setPreviewUrl(res.data.url);
+          toast.success('Image uploaded successfully');
+        }
+      };
 
     return (
         <div style={styles.container}>
@@ -65,13 +80,21 @@ const AddPost = () => {
                     <input
                         type="file"
                         id="image"
-                        value={postForm.image}
-                        onChange={postForm.handleChange}
+                       
+                        onChange={uploadImage}
                         placeholder="Upload the Post"
                         required
                         style={styles.input}
                     />
                 </div>
+                
+                {
+              previewUrl ? (
+                <img src={previewUrl} alt="" />
+              ) : (
+                <h2 className='text-white'>No Image Selected</h2>
+              )
+            }
 
                 <div style={styles.field}>
                     <label htmlFor="community" style={styles.label}>Community ID</label>

@@ -1,11 +1,11 @@
 'use client'
-import {  IconHeart, IconMessage, IconSearch, IconShare3 } from '@tabler/icons-react'
+import { IconBackspace, IconHeart, IconMessage, IconSearch, IconShare3 } from '@tabler/icons-react'
 import axios from 'axios'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
-const Feed = ({ selCommunity }) => {
+const ManagePost = ({ selCommunity }) => {
   const [postList, setPostList] = useState([])
   const [masterList, setMasterList] = useState([]);
 
@@ -41,9 +41,26 @@ const Feed = ({ selCommunity }) => {
   }, [selCommunity])
 
 
-  
+  const deletePost = async (id) => {
+    if (!confirm('Are you sure you want to delete this post?')) return;
+    try {
+      const res = await axios.delete(`http://localhost:5000/post/delete/${id}`)
+      if (res.status === 200) {
+        fetchPost()
+        toast.success('Post deleted successfully');
+      } else {
+        toast.error('Failed to delete post');
+      }
+    } catch (error) {
+      toast.error('An error occurred while deleting the post.');
+    }
+  }
 
-  
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', options);
+  }
 
   return (
     <>
@@ -82,7 +99,7 @@ const Feed = ({ selCommunity }) => {
           >
             <div className="flex justify-between items-center mb-4 p-4">
               <div className="flex items-center gap-x-4">
-                <img className="h-12 w-12 rounded-full" src="images/user1.jpeg" alt="user" />
+                <img className="h-12 w-12 rounded-full" src="" alt="user" />
                 <div>
                   <p className="font-semibold text-black dark:text-white">{post.userName || 'Anonymous'}</p>
                   <ul className="text-xs text-gray-500 dark:text-neutral-400">
@@ -91,7 +108,12 @@ const Feed = ({ selCommunity }) => {
                   </ul>
                 </div>
               </div>
-            
+              <span
+                className="text-2xl text-black dark:text-white cursor-pointer hover:text-red-500"
+                onClick={() => deletePost(post._id)}
+              >
+                <IconBackspace />
+              </span>
             </div>
 
             <div className="space-y-4 px-4 pb-4">
@@ -127,4 +149,4 @@ const Feed = ({ selCommunity }) => {
   )
 }
 
-export default Feed
+export default ManagePost
