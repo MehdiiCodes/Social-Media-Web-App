@@ -118,7 +118,7 @@ const Rightsidebar = () => {
           aria-label="Upload Image"
         />
       </div>
-    {/* Submit Button */}
+    {/* Submit Button  */}
     <button
       type="submit"
       disabled={managecommunityForm.isSubmitting || !managecommunityForm.values.image}
