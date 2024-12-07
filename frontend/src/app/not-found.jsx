@@ -7,7 +7,7 @@ const NotFound = () => {
         <h1 className='text-9xl font-bold'>404</h1>
         <p className='text-3xl font-bold'>Page Not Found</p>
 
-        <button className='bg-black rounded-lg px-4 py-2 text-white'>Go to Homepage</button>
+        <a className='bg-black rounded-lg px-4 py-2 text-white' href="./home">Go to Homepage</a>
       </div>
     </div>
   )
