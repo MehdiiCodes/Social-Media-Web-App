@@ -8,7 +8,7 @@ const mySchema = new Schema({
       minlength: [3, "Title must be at least 3 characters long"],
     },
     image: {
-      type: String, // URL to the community's image
+      type: String, // URL to the community's image.
       required: [true, "Community image is required"],
     },
     createdAt: {
