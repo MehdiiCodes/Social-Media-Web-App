@@ -1,11 +1,11 @@
+'use client';
 import React from 'react'
-import classes from './login.module.css'
 import { useFormik } from 'formik';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const login = () => {
-  
+
   const loginForm = useFormik({
     initialValues: {
       email: '',
@@ -13,17 +13,16 @@ const login = () => {
     },
 
     onSubmit: (values) => {
-
       console.log(values);
-      
+
       axios.post('https://localhost:5000/user/authenticate', values)
-      .then((response) => {
-        toast.success('Login Success');
-        localStorage.setItem('token', response.data.token);
-      }).catch((err) => {
-        console.log(err);
-        toast.error(err.response.data.message)
-      });
+        .then((response) => {
+          toast.success('Login Success');
+          localStorage.setItem('token', response.data.token);
+        }).catch((err) => {
+          console.log(err);
+          toast.error(err.response.data.message)
+        });
     }
   })
 
@@ -49,7 +48,7 @@ const login = () => {
             type="button"
             className="w-full py-3 px-4 flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-300 bg-gradient-to-r from-green-400 to-green-500 text-white shadow hover:from-green-500 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
           >
-            <svg
+            {/* <svg
               className="w-5 h-auto"
               width={46}
               height={47}
@@ -72,7 +71,7 @@ const login = () => {
                 d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z"
                 fill="#EB4335"
               />
-            </svg>
+            </svg> */}
             Sign in with Google
           </button>
           <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">
@@ -94,8 +93,8 @@ const login = () => {
                     type="email"
                     id="email"
                     name="email"
-                    onChange={loginForm}
-                    // value={}
+                    onChange={loginForm.handleChange}
+                    value={loginForm.values.email}
                     className="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-green-500 focus:ring-green-500 dark:bg-gray-50 dark:border-gray-300 dark:text-gray-700 dark:placeholder-gray-500"
                     required=""
                     aria-describedby="email-error"
