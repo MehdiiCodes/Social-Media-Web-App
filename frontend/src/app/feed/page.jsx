@@ -1,5 +1,5 @@
 'use client'
-import {  IconHeart, IconMessage, IconSearch, IconShare3 } from '@tabler/icons-react'
+import { IconHeart, IconMessage, IconSearch, IconShare3 } from '@tabler/icons-react'
 import axios from 'axios'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -40,14 +40,9 @@ const Feed = ({ selCommunity }) => {
     }
   }, [selCommunity])
 
-
-  
-
-  
-
   return (
     <>
-      <div className="lg:w-[550px] md:w-[300px]  mx-auto bg-white dark:bg-gray-800 border mt-8 rounded-lg shadow dark:border-gray-700 border-gray-100 sticky top-24 -z-10">
+      <div className="lg:w-[550px] md:w-[300px] mx-auto bg-white dark:bg-gray-800 border mt-8 rounded-lg shadow dark:border-gray-700 border-gray-100 sticky top-24 -z-10">
         <div className="flex-1 min-w-0">
           {/* Search and Post Button Form */}
           <form className="flex flex-col sm:flex-row items-center gap-4 p-4">
@@ -74,10 +69,10 @@ const Feed = ({ selCommunity }) => {
           </form>
         </div>
       </div>
-      <div className="max-w-3xl px-4 pt-6 lg:pt-5 pb-12 sm:px-6 lg:px-8 ">
+      <div className="max-w-3xl mx-auto px-4 pt-6 lg:pt-5 pb-12 sm:px-6 lg:px-8">
         {postList.map((post) => (
           <div
-            className="max-w-2xl bg-white dark:bg-gray-800 rounded-lg overflow-hidden mb-6 shadow-lg transition-transform transform hover:scale-105"
+            className="max-w-2xl bg-white dark:bg-gray-800 rounded-lg overflow-hidden mb-6 shadow-lg transition-transform transform hover:scale-105 mx-auto"
             key={post._id}
           >
             <div className="flex justify-between items-center mb-4 p-4">
@@ -87,17 +82,15 @@ const Feed = ({ selCommunity }) => {
                   <p className="font-semibold text-black dark:text-white">{post.userName || 'Anonymous'}</p>
                   <ul className="text-xs text-gray-500 dark:text-neutral-400">
                     <li></li>
-
                   </ul>
                 </div>
               </div>
-            
             </div>
 
             <div className="space-y-4 px-4 pb-4">
               <p className="text-lg text-black dark:text-neutral-200">{post.caption}</p>
 
-              <img className="w-full object-cover rounded-xl mb-4" src={post.image} alt="post" />
+              <img className="w-full object -cover rounded-xl mb-4" src={post.image} alt="post" />
 
               <div className="flex justify-between text-black dark:text-white text-sm">
                 <a
