@@ -126,6 +126,8 @@ const login = () => {
                     type="password"
                     id="password"
                     name="password"
+                    onChange={loginForm.handleChange}
+                    value={loginForm.values.password}
                     className="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-green-500 focus:ring-green-500 dark:bg-gray-50 dark:border-gray-300 dark:text-gray-700 dark:placeholder-gray-500"
                     required=""
                     aria-describedby="password-error"
