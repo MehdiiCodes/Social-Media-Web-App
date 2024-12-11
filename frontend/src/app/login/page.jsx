@@ -7,8 +7,12 @@ import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 import { HiOutlineMail } from 'react-icons/hi';
 import { RiLockPasswordLine } from 'react-icons/ri';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
+
+  const router = useRouter();
+
   const loginForm = useFormik({
     initialValues: {
       email: '',
@@ -20,6 +24,7 @@ const Login = () => {
         .then((response) => {
           toast.success('User Login Successfully');
           localStorage.setItem('token', response.data.token);
+          router.push('/');
         }).catch((err) => {
           console.log(err);
           toast.error(err?.response?.data?.message || 'Something went Wrong');
