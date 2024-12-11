@@ -82,7 +82,7 @@ const Login = () => {
                     onChange={loginForm.handleChange}
                     value={loginForm.values.email}
                     className="block w-full pl-10 pr-3 py-2 border border-gray-600 rounded-lg text-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                    placeholder="you@example.com"
+                    placeholder="you@gmail.com"
                     required
                   />
                 </div>
