@@ -4,9 +4,10 @@ import axios from "axios";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import { IconCheck, IconLoader3 } from "@tabler/icons-react";
+import { HiOutlinePhotograph, HiOutlineUserCircle, HiOutlineUsers, HiOutlineHashtag } from "react-icons/hi";
+import { RiImageAddLine } from "react-icons/ri";
 
 const AddPost = () => {
-
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [previewUrl, setPreviewUrl] = useState('');
@@ -27,11 +28,12 @@ const AddPost = () => {
                     router.push('/feed');
                 }).catch((err) => {
                     console.log(err);
-                    toast.error(err?.response?.data?.message || 'Semething went Wrong');
+                    toast.error(err?.response?.data?.message || 'Something went Wrong');
                     setSubmitting(false);
                 });
         }
     });
+
     const uploadImage = async (e) => {
         const file = e.target.files[0];
         const formData = new FormData();
@@ -46,211 +48,109 @@ const AddPost = () => {
           setPreviewUrl(res.data.url);
           toast.success('Image uploaded successfully');
         }
-      };
+    };
 
     return (
-        <div style={styles.container}>
-            <h1 style={styles.heading}>Create a New Post</h1>
-            <form onSubmit={postForm.handleSubmit} style={styles.form}>
-                <div style={styles.field}>
-                    <label htmlFor="title" style={styles.label}>Post Title</label>
-                    <input
-                        type="text"
-                        id="title"
-                        value={postForm.values.title}
-                        onChange={postForm.handleChange}
-                        placeholder="Enter the title of your post"
-                        required
-                        style={styles.input}
-                    />
-                </div>
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
+            <div className="w-full max-w-md">
+                <div className="bg-gray-800 rounded-3xl shadow-xl overflow-hidden">
+                    <div className="p-8 sm:p-10">
+                        <h1 className="text-3xl font-extrabold text-white text-center mb-8">Create Post</h1>
+                        <form onSubmit={postForm.handleSubmit} className="space-y-6">
+                            <div className="space-y-4">
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        id="title"
+                                        name="title"
+                                        value={postForm.values.title}
+                                        onChange={postForm.handleChange}
+                                        placeholder="Add a title..."
+                                        required
+                                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                    />
+                                    <HiOutlineHashtag className="absolute right-3 top-3 text-gray-400 text-xl" />
+                                </div>
 
-                <div style={styles.field}>
-                    <label htmlFor="caption" style={styles.label}>Caption</label>
-                    <textarea
-                        id="caption"
-                        value={postForm.caption}
-                        onChange={postForm.handleChange}
-                        placeholder="Add a caption (optional)"
-                        style={styles.textarea}
-                    ></textarea>
-                </div>
+                                <div className="relative">
+                                    <textarea
+                                        id="caption"
+                                        name="caption"
+                                        value={postForm.values.caption}
+                                        onChange={postForm.handleChange}
+                                        placeholder="Write a caption..."
+                                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none"
+                                        rows={4}
+                                    ></textarea>
+                                </div>
 
-                <div style={styles.field}>
-                    <label htmlFor="image" style={styles.label}>Post</label>
-                    <input
-                        type="file"
-                        id="image"
-                       
-                        onChange={uploadImage}
-                        placeholder="Upload the Post"
-                        required
-                        style={styles.input}
-                    />
-                </div>
-                
-                {
-              previewUrl ? (
-                <img src={previewUrl} alt="" />
-              ) : (
-                <h2 className='text-white'>No Image Selected</h2>
-              )
-            }
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        id="community"
+                                        name="community"
+                                        value={postForm.values.community}
+                                        onChange={postForm.handleChange}
+                                        placeholder="Enter community..."
+                                        required
+                                        className="w-full px-4 py-3 pl-10 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                    />
+                                    <HiOutlineUsers className="absolute left-3 top-3 text-gray-400 text-xl" />
+                                </div>
 
-                <div style={styles.field}>
-                    <label htmlFor="community" style={styles.label}>Community ID</label>
-                    <input
-                        type="text"
-                        id="community"
-                        name="community"
-                        value={postForm.community}
-                        onChange={postForm.handleChange}
-                        placeholder="Enter the community ID"
-                        required
-                        style={styles.input}
-                    />
-                </div>
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        id="postedBy"
+                                        name="postedBy"
+                                        value={postForm.values.postedBy}
+                                        onChange={postForm.handleChange}
+                                        placeholder="Your username..."
+                                        required
+                                        className="w-full px-4 py-3 pl-10 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                    />
+                                    <HiOutlineUserCircle className="absolute left-3 top-3 text-gray-400 text-xl" />
+                                </div>
+                            </div>
 
-                <div style={styles.field}>
-                    <label htmlFor="postedBy" style={styles.label}>Your User ID</label>
-                    <input
-                        type="text"
-                        id="postedBy"
-                        name="postedBy"
-                        value={postForm.postedBy}
-                        onChange={postForm.handleChange}
-                        placeholder="Enter your user ID"
-                        required
-                        style={styles.input}
-                    />
-                </div>
+                            <div className="mt-6">
+                                <label htmlFor="image" className="block text-sm font-medium text-gray-300 mb-2">Add Photo</label>
+                                <div className="mt-1 flex items-center justify-center">
+                                    <label className="w-full flex flex-col items-center justify-center px-4 py-6 bg-gray-700 text-white rounded-xl tracking-wide border border-gray-600 cursor-pointer hover:bg-gray-600 hover:border-purple-500 transition duration-300 ease-in-out">
+                                        <RiImageAddLine className="w-12 h-12 text-purple-500" />
+                                        <span className="mt-2 text-base leading-normal">Select a file</span>
+                                        <input
+                                            type="file"
+                                            id="image"
+                                            onChange={uploadImage}
+                                            className="hidden"
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            {previewUrl && (
+                                <div className="mt-4">
+                                    <img src={previewUrl} alt="Preview" className="w-full h-64 object-cover rounded-xl" />
+                                </div>
+                            )}
 
-                <button
-              type="submit"
-              disabled={postForm.isSubmitting || !postForm.values.image}
-              className="flex items-center justify-center gap-3 w-full py-3 px-4 mt-3 text-sm font-medium rounded-lg bg-blue-700 text-white hover:bg-blue-800  "
-            >
-              {postForm.isSubmitting ? <IconLoader3 className="animate-spin" /> : <IconCheck />}
-              {postForm.isSubmitting ? 'Submitting...' : 'Post'}
-            </button>
-            </form>
-            {message && <p style={styles.message}>{message}</p>}
+                            <button
+                                type="submit"
+                                disabled={postForm.isSubmitting || !postForm.values.image}
+                                className="w-full py-4 px-4 border border-transparent rounded-xl text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-purple-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
+                            >
+                                {postForm.isSubmitting ? <IconLoader3 className="animate-spin mr-2" /> : <IconCheck className="mr-2" />}
+                                {postForm.isSubmitting ? 'Sharing...' : 'Share Post'}
+                            </button>
+                        </form>
+                        {message && <p className="mt-4 text-center text-sm text-gray-300">{message}</p>}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
 
-const styles = {
-    container: {
-        maxWidth: "500px",
-        margin: "50px auto",
-        padding: "30px",
-        fontFamily: "'Poppins', sans-serif",
-        borderRadius: "15px",
-        background: "linear-gradient(180deg, #e0f7fa, #ffffff)", // Pastel gradient background
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
-        animation: "fadeIn 0.5s",
-    },
-    heading: {
-        textAlign: "center",
-        marginBottom: "20px",
-        color: "#333",
-        fontSize: "34px",
-        fontWeight: "700",
-        textShadow: "1px 1px 1px rgba(255, 255, 255, 0.9)", // Softer text shadow
-    },
-    form: {
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-    },
-    field: {
-        display: "flex",
-        flexDirection: "column",
-    },
-    label: {
-        fontWeight: "600",
-        marginBottom: "5px",
-        color: "#555", // Soft gray for labels
-    },
-    input: {
-        padding: "14px",
-        borderRadius: "10px",
-        border: "2px solid #b2ebf2",
-        fontSize: "16px",
-        transition: "border-color 0.3s, box-shadow 0.3s",
-        outline: "none",
-        backgroundColor: "#ffffff", // White background for inputs
-    },
-    inputFocus: {
-        borderColor: "#80deea", // Light teal on focus
-        boxShadow: "0 0 5px rgba(128, 222, 234, 0.5)", // Soft teal shadow on focus
-    },
-    textarea: {
-        padding: "14px",
-        borderRadius: "10px",
-        border: "2px solid #b2ebf2",
-        fontSize: "16px",
-        resize: "none",
-        height: "120px",
-        transition: "border-color 0.3s, box-shadow 0.3s",
-        outline: "none",
-        backgroundColor: "#ffffff",
-    },
-    textareaFocus: {
-        borderColor: "#80deea",
-        boxShadow: "0 0 5px rgba(128, 222, 234, 0.5)",
-    },
-    button: {
-        padding: "15px",
-        border: "none",
-        borderRadius: "10px",
-        background: "#4db6ac", // Soft teal button
-        color: "#fff",
-        fontWeight: "600",
-        cursor: "pointer",
-        transition: "background-color 0.3s, transform 0.2s",
-        fontSize: "16px",
-        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-    },
-    buttonHover: {
-        background: "#26a69a", // Darker teal on hover
-        transform: "scale(1.05)", // Slight grow on hover
-    },
-    buttonDisabled: {
-        padding: "15px",
-        border: "none",
-        borderRadius: "10px",
-        background: "#ccc",
-        color: "#fff",
-        fontWeight: "600",
-        cursor: "not-allowed",
-    },
-    message: {
-        textAlign: "center",
-        marginTop: "20px",
-        fontSize: "18px",
-        fontWeight: "600",
-        color: "#4db6ac", // Soft teal message color
-    },
-    errorMessage: {
-        textAlign: "center",
-        marginTop: "10px",
-        fontSize: "16px",
-        fontWeight: "600",
-        color: "#f44336", // Red for error messages
-    },
-};
-
-// Keyframes for fade-in animation
-const fadeIn = `
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-`;
-
 export default AddPost;
+
