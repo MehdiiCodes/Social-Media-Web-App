@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
-const Feed = ({ selCommunity }) => {
+const feed = ({ selCommunity }) => {
   const [postList, setPostList] = useState([])
   const [masterList, setMasterList] = useState([]);
 
@@ -120,4 +120,4 @@ const Feed = ({ selCommunity }) => {
   )
 }
 
-export default Feed
+export default feed
