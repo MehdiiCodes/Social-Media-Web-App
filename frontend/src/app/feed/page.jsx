@@ -1,123 +1,115 @@
 'use client'
-import { IconHeart, IconMessage, IconSearch, IconShare3 } from '@tabler/icons-react'
+
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
+import { Search, Heart, MessageCircle, Share2, Plus } from 'lucide-react'
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 
-const feed = ({ selCommunity }) => {
+const Feed = ({ selCommunity }) => {
   const [postList, setPostList] = useState([])
-  const [masterList, setMasterList] = useState([]);
+  const [masterList, setMasterList] = useState([])
 
   const filterPosts = (e) => {
-    const v = e.target.value;
+    const v = e.target.value
     setPostList(
-      masterList.filter((post) => { return post.caption.toLowerCase().includes(v.toLowerCase()) })
+      masterList.filter((post) => post.caption.toLowerCase().includes(v.toLowerCase()))
     )
   }
 
   const fetchPost = async () => {
     try {
       const res = await axios.get('http://localhost:5000/post/getall')
-      console.log(res.data);
-      
       setPostList(res.data)
-      setMasterList(res.data);
+      setMasterList(res.data)
     } catch (error) {
       toast.error('Failed to fetch posts. Please try again later.')
     }
   }
 
   useEffect(() => {
-    fetchPost();
-  }, []);
+    fetchPost()
+  }, [])
 
   useEffect(() => {
     if (selCommunity) {
       setPostList(
-        masterList.filter((post) => { return post.community.toLowerCase() === selCommunity.toLowerCase() })
+        masterList.filter((post) => post.community.toLowerCase() === selCommunity.toLowerCase())
       )
     }
-  }, [selCommunity])
+  }, [selCommunity, masterList])
 
   return (
-    <>
-      <div className="lg:w-[550px] md:w-[300px] mx-auto bg-white dark:bg-gray-800 border mt-8 rounded-lg shadow dark:border-gray-700 border-gray-100 sticky top-24 -z-10">
-        <div className="flex-1 min-w-0">
-          {/* Search and Post Button Form */}
-          <form className="flex flex-col sm:flex-row items-center gap-4 p-4">
-            {/* Search Input Field */}
-            <div className="hidden sm:block flex-1 max-w-[400px] bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-all duration-300 ease-in-out focus-within:ring-2 focus-within:ring-blue-500 dark:focus-within:ring-blue-500">
-              <div className="flex items-center gap-2">
-                <IconSearch className="text-gray-400 dark:text-gray-200" />
-                <input
+    <div className="min-h-screen bg-gray-950 text-gray-100">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <Card className="mb-8 bg-gray-900 border-gray-800">
+          <CardContent className="p-4">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div className="relative flex-grow">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Input
                   type="text"
+                  placeholder="Search posts"
                   onChange={filterPosts}
-                  placeholder="Search"
-                  className="w-full bg-transparent text-gray-900 dark:text-white focus:outline-none placeholder:text-gray-500 dark:placeholder:text-gray-300"
+                  className="pl-10 bg-gray-800 border-gray-700 text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
                 />
               </div>
+              <Button asChild className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white">
+                <Link href="/Createpost">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Post
+                </Link>
+              </Button>
             </div>
+          </CardContent>
+        </Card>
 
-            {/* Post Button */}
-            <Link
-              href="Createpost"
-              className="w-full sm:w-auto py-2 px-6 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border-2 border-transparent bg-gradient-to-r from-indigo-600 to-indigo-800 text-white hover:from-indigo-700 hover:to-indigo-900 focus:outline-none active:scale-95 transition-all duration-300 ease-in-out dark:bg-gradient-to-r dark:from-indigo-500 dark:to-indigo-700 dark:hover:from-indigo-600 dark:hover:to-indigo-800"
-            >
-              Post
-            </Link>
-          </form>
-        </div>
-      </div>
-      <div className="max-w-3xl mx-auto px-4 pt-6 lg:pt-5 pb-12 sm:px-6 lg:px-8">
         {postList.map((post) => (
-          <div
-            className="max-w-2xl bg-white dark:bg-gray-800 rounded-lg overflow-hidden mb-6 shadow-lg transition-transform transform hover:scale-105 mx-auto"
-            key={post._id}
-          >
-            <div className="flex justify-between items-center mb-4 p-4">
-              <div className="flex items-center gap-x-4">
-                <img className="h-12 w-12 rounded-full" src="images/user1.jpeg" alt="user" />
-                <div>
-                  <p className="font-semibold text-black dark:text-white">{post.userName || 'Anonymous'}</p>
-                  <ul className="text-xs text-gray-500 dark:text-neutral-400">
-                    <li></li>
-                  </ul>
-                </div>
+          <Card key={post._id} className="mb-6 bg-gray-900 border-gray-800 overflow-hidden">
+            <CardHeader className="flex flex-row items-center gap-4 p-4">
+              <Avatar>
+                <AvatarImage src={post.userAvatar || "/images/user1.jpeg"} alt={post.userName || 'Anonymous'} />
+                <AvatarFallback>{post.userName ? post.userName[0] : 'A'}</AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-100">{post.userName || 'Anonymous'}</h3>
+                <p className="text-sm text-gray-400">{new Date(post.createdAt).toLocaleDateString()}</p>
               </div>
-            </div>
-
-            <div className="space-y-4 px-4 pb-4">
-              <p className="text-lg text-black dark:text-neutral-200">{post.caption}</p>
-
-              <img className="w-full object -cover rounded-xl mb-4" src={post.image} alt="post" />
-
-              <div className="flex justify-between text-black dark:text-white text-sm">
-                <a
-                  className="flex items-center gap-2 cursor-pointer hover:text-pink-500"
-                  href="#"
-                >
-                  <IconHeart /> <span>{post.likes || 0} likes</span>
-                </a>
-                <a
-                  className="flex items-center gap-2 cursor-pointer hover:text-blue-500"
-                  href="#"
-                >
-                  <IconMessage /> <span>{post.comments || 0} comments</span>
-                </a>
-                <a
-                  className="flex items-center gap-2 cursor-pointer hover:text-green-500"
-                  href="#"
-                >
-                  <IconShare3 /> <span>{post.shares || 0} shares</span>
-                </a>
-              </div>
-            </div>
-          </div>
+            </CardHeader>
+            <CardContent className="p-4">
+              <p className="text-gray-300 mb-4">{post.caption}</p>
+              {post.image && (
+                <img 
+                  src={post.image} 
+                  alt="Post content" 
+                  className="w-full h-64 object-cover rounded-lg"
+                />
+              )}
+            </CardContent>
+            <CardFooter className="flex justify-between p-4 border-t border-gray-800">
+              <Button variant="ghost" className="text-pink-400 hover:text-pink-300 hover:bg-gray-800">
+                <Heart className="w-5 h-5 mr-2" />
+                <span>{post.likes || 0}</span>
+              </Button>
+              <Button variant="ghost" className="text-blue-400 hover:text-blue-300 hover:bg-gray-800">
+                <MessageCircle className="w-5 h-5 mr-2" />
+                <span>{post.comments || 0}</span>
+              </Button>
+              <Button variant="ghost" className="text-green-400 hover:text-green-300 hover:bg-gray-800">
+                <Share2 className="w-5 h-5 mr-2" />
+                <span>{post.shares || 0}</span>
+              </Button>
+            </CardFooter>
+          </Card>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 
-export default feed
+export default Feed
+
