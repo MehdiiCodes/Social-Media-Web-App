@@ -1,27 +1,31 @@
-import React from 'react'
+import Link from 'next/link'
+// import { Button } from "@/components/ui/button"
 
-const Page = () => {
+export default function Home() {
   return (
-    <div>
-      <div
-        className="hero min-h-screen"
-        style={{
-          backgroundImage: "url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)",
-        }}>
-        <div className="hero-overlay bg-opacity-60"></div>
-        <div className="hero-content text-neutral-content text-center">
-          <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-            <p className="mb-5">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-              quasi. In deleniti eaque aut repudiandae et a id nisi.
-            </p>
-            <button className="btn btn-primary">Get Started</button>
-          </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 rounded-xl shadow-2xl">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-white mb-2">SocialApp</h1>
+          <p className="text-gray-400">Connect with friends and the world around you.</p>
+        </div>
+
+        <div className="space-y-4">
+          <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+            <Link href="/login">Log In</Link>
+          </Button>
+          <Button asChild variant="outline" className="w-full border-gray-600 text-gray-300 hover:bg-gray-700">
+            <Link href="/signup">Sign Up</Link>
+          </Button>
+        </div>
+
+        <div className="mt-8 text-center">
+          <p className="text-sm text-gray-400">
+            By signing up, you agree to our Terms, Privacy Policy and Cookies Policy.
+          </p>
         </div>
       </div>
     </div>
   )
 }
 
-export default Page
