@@ -24,7 +24,7 @@ const Login = () => {
         .then((response) => {
           toast.success('User Login Successfully');
           localStorage.setItem('token', response.data.token);
-          router.push('/');
+          router.push('/feed');
         }).catch((err) => {
           console.log(err);
           toast.error(err?.response?.data?.message || 'Something went Wrong');
