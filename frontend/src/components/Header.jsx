@@ -51,10 +51,10 @@ const Header = () => {
         {/* Right Side - Icons and Logout */}
         <div className="flex items-center gap-4 mt-4 sm:mt-0">
         <div className="flex justify-between w-[400px]">
-        <Link href="./" className="px-4 py-2 font-semibold text-black dark:text-white ">
+        <Link href="./feed" className="px-4 py-2 font-semibold text-black dark:text-white ">
              Home
             </Link>
-        <Link href="/addpost" className="px-4 py-2 font-semibold text-black dark:text-white ">
+        <Link href="./addpost" className="px-4 py-2 font-semibold text-black dark:text-white ">
               Add Post
             </Link>
         <Link href="/managecommunity" className="px-4 py-2 font-semibold text-black dark:text-white ">
