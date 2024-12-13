@@ -1,6 +1,7 @@
 const express = require('express');
 const Model = require('../models/PostModel');
 const jwt = require('jsonwebtoken');
+const verifyToken = require('../middlewares/verifyToken');
 require('dotenv').config();
 
 const router = express.Router();
@@ -33,6 +34,20 @@ router.get('/getall', (req, res) => {
         });
 
 });
+
+router.get('/getpost',verifyToken, (req, res) => {
+    const{_id}=req.post;
+    Model.find()
+        .then((result) => {
+            res.status(200).json(result)
+        }).catch((err) => {
+            console.log(err);
+            if(err==11000){
+                res.status(500).json(err)
+            
+            }
+        });
+})
 
 // : denotes url parameter
 router.get('/getbycity/:city', (req, res) => {
