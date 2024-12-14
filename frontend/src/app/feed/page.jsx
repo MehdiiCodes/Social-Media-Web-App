@@ -121,7 +121,7 @@ const Feed = ({ selCommunity }) => {
                 <img src={post.userAvatar || "/images/user1.jpeg"} alt={post.userName || 'Anonymous'} className="w-full h-full object-cover" />
               </div>
               <div className="flex-grow">
-                <h3 className="text-lg font-semibold text-gray-100">{post.userName || 'Anonymous'}</h3>
+                <h3 className="text-lg font-semibold text-gray-100">{post.postedBy || 'Anonymous'}</h3>
                 <p className="text-xs text-gray-400">{formatTimestamp(post.createdAt)}</p>
               </div>
               <button className="text-gray-400 hover:text-gray-300">
