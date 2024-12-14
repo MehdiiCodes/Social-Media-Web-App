@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -9,6 +9,7 @@ const Feed = ({ selCommunity }) => {
   const [postList, setPostList] = useState([])
   const [masterList, setMasterList] = useState([])
   const [newPostsCount, setNewPostsCount] = useState(0)
+  const [menuOpen, setMenuOpen] = useState({})
 
   const filterPosts = (e) => {
     const v = e.target.value
@@ -43,20 +44,49 @@ const Feed = ({ selCommunity }) => {
     }
   }, [selCommunity, masterList])
 
-  const handleLike = (postId) => {
-    setPostList(prevPosts =>
-      prevPosts.map(post =>
-        post._id === postId ? { ...post, likes: (post.likes || 0) + 1 } : post
+  const handleLike = async (postId) => {
+    try {
+      await axios.post(`http://localhost:5000/post/like/${postId}`)
+      setPostList(prevPosts =>
+        prevPosts.map(post =>
+          post._id === postId ? { ...post, likes: (post.likes || 0) + 1 } : post
+        )
       )
-    )
+    } catch (error) {
+      toast.error('Failed to like the post.')
+    }
   }
 
-  const handleShare = (postId) => {
-    setPostList(prevPosts =>
-      prevPosts.map(post =>
-        post._id === postId ? { ...post, shares: (post.shares || 0) + 1 } : post
+  const handleShare = async (postId) => {
+    try {
+      await axios.post(`http://localhost:5000/post/share/${postId}`)
+      setPostList(prevPosts =>
+        prevPosts.map(post =>
+          post._id === postId ? { ...post, shares: (post.shares || 0) + 1 } : post
+        )
       )
-    )
+    } catch (error) {
+      toast.error('Failed to share the post.')
+    }
+  }
+
+  const handleEdit = (postId) => {
+    // Navigate to edit post page
+    window.location.href = `/editpost/${postId}`
+  }
+
+  const handleDelete = async (postId) => {
+    try {
+      await axios.delete(`http://localhost:5000/post/delete/${postId}`)
+      setPostList(prevPosts => prevPosts.filter(post => post._id !== postId))
+      toast.success('Post deleted successfully.')
+    } catch (error) {
+      toast.error('Failed to delete the post.')
+    }
+  }
+
+  const toggleMenu = (postId) => {
+    setMenuOpen(prev => ({ ...prev, [postId]: !prev[postId] }))
   }
 
   const loadNewPosts = () => {
@@ -124,11 +154,23 @@ const Feed = ({ selCommunity }) => {
                 <h3 className="text-lg font-semibold text-gray-100">{post.postedBy || 'Anonymous'}</h3>
                 <p className="text-xs text-gray-400">{formatTimestamp(post.createdAt)}</p>
               </div>
-              <button className="text-gray-400 hover:text-gray-300">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                </svg>
-              </button>
+              <div className="relative">
+                <button 
+                  className="text-gray-400 hover:text-gray-300"
+                  onClick={() => toggleMenu(post._id)}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                  </svg>
+                </button>
+                {menuOpen[post._id] && (
+                  <div className="absolute right-0 mt-2 w-40 bg-gray-700 rounded-lg shadow-lg">
+                    <button onClick={() => handleEdit(post._id)} className="w-full px-4 py-2 text-left text-gray-100 hover:bg-gray-600">Edit Post</button>
+                    <button onClick={() => handleDelete(post._id)} className="w-full px-4 py-2 text-left text-red-500 hover:bg-gray-600">Delete Post</button>
+                    <button onClick={() => handleShare(post._id)} className="w-full px-4 py-2 text-left text-purple-500 hover:bg-gray-600">Share Post</button>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="p-4">
               <p className="text-gray-300 mb-4">{post.caption}</p>
@@ -150,12 +192,6 @@ const Feed = ({ selCommunity }) => {
                 </svg>
                 <span>{post.likes || 0}</span>
               </button>
-              <button className="flex items-center text-gray-400 hover:text-green-400 transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-                <span>{post.comments || 0}</span>
-              </button>
               <button 
                 onClick={() => handleShare(post._id)}
                 className="flex items-center text-gray-400 hover:text-purple-400 transition duration-300"
@@ -174,4 +210,3 @@ const Feed = ({ selCommunity }) => {
 }
 
 export default Feed
-

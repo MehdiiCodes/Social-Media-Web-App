@@ -105,7 +105,7 @@ const AddPost = () => {
                                         name="postedBy"
                                         value={postForm.values.postedBy}
                                         onChange={postForm.handleChange}
-                                        placeholder="Your username..."
+                                        placeholder="username..."
                                         required
                                         className="w-full px-4 py-3 pl-10 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                                     />
@@ -114,11 +114,11 @@ const AddPost = () => {
                             </div>
 
                             <div className="mt-6">
-                                <label htmlFor="image" className="block text-sm font-medium text-gray-300 mb-2">Add Photo</label>
+                                {/* <label htmlFor="image" className="block text-sm font-medium text-gray-300 mb-2">Add Photo</label> */}
                                 <div className="mt-1 flex items-center justify-center">
                                     <label className="w-full flex flex-col items-center justify-center px-4 py-6 bg-gray-700 text-white rounded-xl tracking-wide border border-gray-600 cursor-pointer hover:bg-gray-600 hover:border-purple-500 transition duration-300 ease-in-out">
                                         <RiImageAddLine className="w-12 h-12 text-purple-500" />
-                                        <span className="mt-2 text-base leading-normal">Select a file</span>
+                                        <span className="mt-2 text-base leading-normal">Add Photo</span>
                                         <input
                                             type="file"
                                             id="image"
