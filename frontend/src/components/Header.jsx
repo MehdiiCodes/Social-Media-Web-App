@@ -1,12 +1,11 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { IconBellRingingFilled, IconCampfireFilled, IconSearch, IconSun, IconMoon, IconCode } from '@tabler/icons-react';
 
 const Header = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Check the saved mode preference from localStorage (if any)
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode') === 'true';
     setDarkMode(savedMode);
@@ -17,7 +16,6 @@ const Header = () => {
     }
   }, []);
 
-  // Toggle dark mode
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => {
       const newMode = !prevMode;
@@ -31,69 +29,89 @@ const Header = () => {
     });
   };
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
-    <header className="h-16 shadow-xl sticky top-0 z-10 transition-all duration-300 ease-in-out">
-      <div className={`h-full container mx-auto flex flex-col sm:flex-row items-center px-4 sm:px-12 justify-between bg-white dark:bg-gray-900`}>
-
-        {/* Logo Section */}
-        <div className="flex items-center justify-between w-full sm:w-auto mb-4 sm:mb-0">
-          <Link href="./">
-            <h2 className="text-4xl font-bold flex items-center space-x-2 text-blue-600 dark:text-orange-500">
-              <IconCode stroke={2} className="h-14 w-14 text-red-500 dark:text-red-300" />
-              <span className="ml-2 hidden sm:block">MehdiiCodes</span>
-            </h2>
+    <header className="bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-gray-800 dark:to-gray-900 text-white shadow-lg sticky top-0 z-50 transition-all duration-300 ease-in-out">
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between">
+          <Link href="./" className="flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+            </svg>
+            <span className="text-2xl font-bold">CommUnity</span>
           </Link>
-        </div>
 
-        {/* Search Bar (Optional, could be added later) */}
-       
-
-        {/* Right Side - Icons and Logout */}
-        <div className="flex items-center gap-4 mt-4 sm:mt-0">
-        <div className="flex justify-between w-[400px]">
-        <Link href="./feed" className="px-4 py-2 font-semibold text-black dark:text-white ">
-             Home
-            </Link>
-        <Link href="./addpost" className="px-4 py-2 font-semibold text-black dark:text-white ">
-              Add Post
-            </Link>
-        <Link href="/managecommunity" className="px-4 py-2 font-semibold text-black dark:text-white ">
-             Create community
-            </Link>
-        </div>
-          {/* Sun/Moon Icon for theme toggle */}
-          <div
-            className="text-3xl cursor-pointer transition-all duration-300 ease-in-out"
-            onClick={toggleDarkMode}
-          >
-            {darkMode ? (
-              <IconMoon className="text-yellow-400 hover:text-yellow-500" />
-            ) : (
-              <IconSun className="text-gray-700 dark:text-white hover:text-yellow-300" />
-            )}
+          <div className="hidden md:flex items-center space-x-6">
+            <NavLink href="./feed">Home</NavLink>
+            <NavLink href="./addpost">Add Post</NavLink>
+            <NavLink href="/managecommunity">Manage Community</NavLink>
           </div>
 
-          {/* Notification Icon */}
-          <div className="text-2xl relative text-gray-700 dark:text-white cursor-pointer hover:text-blue-500 transition-all duration-300 ease-in-out">
-            <IconBellRingingFilled />
-            <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
-          </div>
+          <div className="flex items-center space-x-4">
+            <button onClick={toggleDarkMode} className="p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition-colors duration-200">
+              {darkMode ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
 
-          {/* Log out button */}
-          <div>
-            <Link href="/login" className="px-4 py-2 text-white rounded-full bg-blue-700 hover:bg-blue-800 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all duration-300 ease-in-out">
-              Log out
-            </Link>
-          </div>
-          <div>
-            <Link href="/signup" className="px-4 py-2 text-white rounded-full bg-blue-700 hover:bg-blue-800 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all duration-300 ease-in-out">
-             Sign up
-            </Link>
+            <button className="p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition-colors duration-200 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
+            </button>
+
+            <div className="hidden md:flex space-x-2">
+              <Link href="/login" className="px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-opacity-90 transition-colors duration-200">
+                Log in
+              </Link>
+              <Link href="/signup" className="px-4 py-2 rounded-full bg-purple-800 hover:bg-purple-700 transition-colors duration-200">
+                Sign up
+              </Link>
+            </div>
+
+            <button onClick={toggleMenu} className="md:hidden p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition-colors duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </div>
+
+        {menuOpen && (
+          <div className="md:hidden mt-4 space-y-4">
+            <NavLink href="./feed" mobile>Home</NavLink>
+            <NavLink href="./addpost" mobile>Add Post</NavLink>
+            <NavLink href="/managecommunity" mobile>Manage Community</NavLink>
+            <div className="flex space-x-2 mt-4">
+              <Link href="/login" className="flex-1 px-4 py-2 text-center rounded-full bg-white text-purple-600 hover:bg-opacity-90 transition-colors duration-200">
+                Log in
+              </Link>
+              <Link href="/signup" className="flex-1 px-4 py-2 text-center rounded-full bg-purple-800 hover:bg-purple-700 transition-colors duration-200">
+                Sign up
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );
 };
 
+const NavLink = ({ href, children, mobile }) => (
+  <Link href={href} className={`font-medium hover:text-purple-200 transition-colors duration-200 ${mobile ? 'block py-2' : ''}`}>
+    {children}
+  </Link>
+);
+
 export default Header;
+

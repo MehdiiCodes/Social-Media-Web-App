@@ -45,7 +45,7 @@ router.get('/getbycity/:city', (req, res) => {
 })
 
 // getbyid
-router.get('/getbyid/:id', (req, res) => {
+router.get('/getbyid', (req, res) => {
     Model.findById(req.params.id)
         .then((result) => {
             res.status(200).json(result);

@@ -8,6 +8,7 @@ import { toast } from 'react-hot-toast'
 const Feed = ({ selCommunity }) => {
   const [postList, setPostList] = useState([])
   const [masterList, setMasterList] = useState([])
+  const [newPostsCount, setNewPostsCount] = useState(0)
 
   const filterPosts = (e) => {
     const v = e.target.value
@@ -28,6 +29,10 @@ const Feed = ({ selCommunity }) => {
 
   useEffect(() => {
     fetchPost()
+    const interval = setInterval(() => {
+      setNewPostsCount(prev => prev + Math.floor(Math.random() * 3))
+    }, 30000)
+    return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {
@@ -38,12 +43,46 @@ const Feed = ({ selCommunity }) => {
     }
   }, [selCommunity, masterList])
 
+  const handleLike = (postId) => {
+    setPostList(prevPosts =>
+      prevPosts.map(post =>
+        post._id === postId ? { ...post, likes: (post.likes || 0) + 1 } : post
+      )
+    )
+  }
+
+  const handleShare = (postId) => {
+    setPostList(prevPosts =>
+      prevPosts.map(post =>
+        post._id === postId ? { ...post, shares: (post.shares || 0) + 1 } : post
+      )
+    )
+  }
+
+  const loadNewPosts = () => {
+    fetchPost()
+    setNewPostsCount(0)
+  }
+
+  const formatTimestamp = (date) => {
+    const now = new Date()
+    const diff = now - new Date(date)
+    const minutes = Math.floor(diff / 60000)
+    const hours = Math.floor(minutes / 60)
+    const days = Math.floor(hours / 24)
+
+    if (days > 0) return `${days}d ago`
+    if (hours > 0) return `${hours}h ago`
+    if (minutes > 0) return `${minutes}m ago`
+    return 'Just now'
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-gray-100">
-      <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gray-900 text-gray-100">
+      <div className="max-w-2xl mx-auto px-4 py-8">
         <div className="mb-8 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           <div className="p-4">
-            <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="flex items-center gap-4">
               <div className="relative flex-grow">
                 <input
                   type="text"
@@ -55,28 +94,41 @@ const Feed = ({ selCommunity }) => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              <Link href="/addpost" className="w-full sm:w-auto">
-                <button className="w-full sm:w-auto px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition duration-300 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <Link href="/addpost">
+                <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition duration-300 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
-                  Create Post
                 </button>
               </Link>
             </div>
           </div>
         </div>
 
+        {newPostsCount > 0 && (
+          <button
+            onClick={loadNewPosts}
+            className="w-full mb-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-300"
+          >
+            {newPostsCount} new post{newPostsCount > 1 ? 's' : ''}
+          </button>
+        )}
+
         {postList.map((post) => (
-          <div key={post._id} className="mb-6 bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
-            <div className="flex items-center gap-4 p-4 border-b border-gray-700">
-              <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-600">
+          <div key={post._id} className="mb-6 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div className="flex items-center gap-3 p-4 border-b border-gray-700">
+              <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-600">
                 <img src={post.userAvatar || "/images/user1.jpeg"} alt={post.userName || 'Anonymous'} className="w-full h-full object-cover" />
               </div>
-              <div>
+              <div className="flex-grow">
                 <h3 className="text-lg font-semibold text-gray-100">{post.userName || 'Anonymous'}</h3>
-                <p className="text-sm text-gray-400">{new Date(post.createdAt).toLocaleDateString()}</p>
+                <p className="text-xs text-gray-400">{formatTimestamp(post.createdAt)}</p>
               </div>
+              <button className="text-gray-400 hover:text-gray-300">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                </svg>
+              </button>
             </div>
             <div className="p-4">
               <p className="text-gray-300 mb-4">{post.caption}</p>
@@ -89,20 +141,26 @@ const Feed = ({ selCommunity }) => {
               )}
             </div>
             <div className="flex justify-between p-4 border-t border-gray-700">
-              <button className="flex items-center text-pink-400 hover:text-pink-300 transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              <button 
+                onClick={() => handleLike(post._id)}
+                className="flex items-center text-gray-400 hover:text-blue-400 transition duration-300"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
                 </svg>
                 <span>{post.likes || 0}</span>
               </button>
-              <button className="flex items-center text-blue-400 hover:text-blue-300 transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <button className="flex items-center text-gray-400 hover:text-green-400 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
                 <span>{post.comments || 0}</span>
               </button>
-              <button className="flex items-center text-green-400 hover:text-green-300 transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <button 
+                onClick={() => handleShare(post._id)}
+                className="flex items-center text-gray-400 hover:text-purple-400 transition duration-300"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                 </svg>
                 <span>{post.shares || 0}</span>
