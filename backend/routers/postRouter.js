@@ -98,7 +98,7 @@ router.post('/like/:id', async (req, res) => {
 // Share a post
 router.post('/share/:id', async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Model.findById(req.params.id);
         if (!post) return res.status(404).json({ message: 'Post not found' });
 
         post.shares += 1;
