@@ -69,17 +69,49 @@ router.get('/getbyid/:id', (req, res) => {
         });
 });
 
-// update
-router.put('/update/:id', (req, res) => {
+// Update a post
+router.put('/update/:id', async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      if (!post) return res.status(404).json({ message: 'Post not found' });
+  
+      post.caption = req.body.caption;
+      post.community = req.body.community;
+  
+      const updatedPost = await post.save();
+      res.json(updatedPost);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  });
 
-    Model.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        .then((result) => {
-            res.status(200).json(result);
-        }).catch((err) => {
-            console.log(err);
-            res.status(500).json(err);
-        });
-});
+// Like a post
+router.post('/like/:id', async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      if (!post) return res.status(404).json({ message: 'Post not found' });
+  
+      post.likes += 1;
+      const updatedPost = await post.save();
+      res.json(updatedPost);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  });
+  
+  // Share a post
+  router.post('/share/:id', async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      if (!post) return res.status(404).json({ message: 'Post not found' });
+  
+      post.shares += 1;
+      const updatedPost = await post.save();
+      res.json(updatedPost);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  });
 
 // delete 
 router.delete('/delete/:id', (req, res) => {
