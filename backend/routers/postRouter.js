@@ -49,44 +49,40 @@ router.get('/getpost',verifyToken, (req, res) => {
         });
 })
 
-// : denotes url parameter
-router.get('/getbycity/:city', (req, res) => {
-    Model.find({ city: req.params.city })
-        .then((result) => {
-            res.status(200).json(result);
-        }).catch((err) => {
-            res.status(500).json(err);
-        });
-})
+// // : denotes url parameter
+// router.get('/getbycity/:city', (req, res) => {
+//     Model.find({ city: req.params.city })
+//         .then((result) => {
+//             res.status(200).json(result);
+//         }).catch((err) => {
+//             res.status(500).json(err);
+//         });
+// })
 
 // getbyid
-router.get('/getbyid/:id', (req, res) => {
-    Model.findById(req.params.id)
-        .then((result) => {
-            res.status(200).json(result);
-        }).catch((err) => {
-            res.status(500).json(err);
-        });
-});
+router.get('getbyid', (req, res) => {
+    Model.findById()
+    .then((result) => {
+       res.status(200).json(result) 
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).json(err)   
+    }); 
+})
 
 // Update a post
-router.put('/update/:id', async (req, res) => {
-    try {
-      const post = await Post.findById(req.params.id);
-      if (!post) return res.status(404).json({ message: 'Post not found' });
-  
-      post.caption = req.body.caption;
-      post.community = req.body.community;
-  
-      const updatedPost = await post.save();
-      res.json(updatedPost);
-    } catch (err) {
-      res.status(400).json({ message: err.message });
-    }
-  });
+router.get('/update', (req, res) => {
+    Model.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then((result) => {
+        res.status(200).json(result)
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).json(err)
+    }); 
+})
 
 // Like a post
-router.post('/like/:id', async (req, res) => {
+router.post('/like', async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
       if (!post) return res.status(404).json({ message: 'Post not found' });
