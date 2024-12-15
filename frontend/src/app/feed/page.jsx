@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { toast } from 'react-hot-toast'
 import SearchBar from '@/components/SearchBar'
 import PostCard from '@/components/PostCard'
+import Header from '@/components/Header'
 // import SearchBar from './components/'
 // import PostCard from './components/PostCard'
 
@@ -123,6 +124,7 @@ const Feed = ({ selCommunity }) => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
+      <Header />
       <div className="max-w-2xl mx-auto px-4 py-8">
         <div className="mb-8 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           <div className="p-4">
