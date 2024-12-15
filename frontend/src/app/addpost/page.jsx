@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
@@ -9,11 +9,11 @@ import { RiImageAddLine } from "react-icons/ri";
 
 const AddPost = () => {
 
-    
-
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [previewUrl, setPreviewUrl] = useState('');
+    const [communities, setCommunities] = useState([]);
+
     const postForm = useFormik({
         initialValues: {
             title: '',
@@ -37,19 +37,30 @@ const AddPost = () => {
         }
     });
 
+    const fetchCommunities = async () => {
+        const res = await axios.get('http://localhost:5000/community/getall');
+        console.log(res.data);
+        setCommunities(res.data);
+    }
+
+    useEffect(() => {
+        fetchCommunities();
+    }, [])
+
+
     const uploadImage = async (e) => {
         const file = e.target.files[0];
         const formData = new FormData();
-    
+
         formData.append('file', file);
         formData.append('upload_preset', 'mehdiicodes');
         formData.append('cloud_name', 'dpys6yu2j');
-    
+
         const res = await axios.post('https://api.cloudinary.com/v1_1/dpys6yu2j/image/upload', formData);
         if (res.status === 200) {
-          postForm.setFieldValue('image', res.data.url);
-          setPreviewUrl(res.data.url);
-          toast.success('Image uploaded successfully');
+            postForm.setFieldValue('image', res.data.url);
+            setPreviewUrl(res.data.url);
+            toast.success('Image uploaded successfully');
         }
     };
 
@@ -88,7 +99,7 @@ const AddPost = () => {
                                 </div>
 
                                 <div className="relative">
-                                    <input
+                                    <select
                                         type="text"
                                         id="community"
                                         name="community"
@@ -97,7 +108,14 @@ const AddPost = () => {
                                         placeholder="Enter community..."
                                         required
                                         className="w-full px-4 py-3 pl-10 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                                    />
+                                    >
+                                        <option>select community</option>
+                                        {
+                                            communities.map(community => (
+                                                <option key={community._id} value={community.title}>{community.title}</option>
+                                            ))
+                                        }
+                                    </select>
                                     <HiOutlineUsers className="absolute left-3 top-3 text-gray-400 text-xl" />
                                 </div>
 
@@ -131,7 +149,7 @@ const AddPost = () => {
                                     </label>
                                 </div>
                             </div>
-                            
+
                             {previewUrl && (
                                 <div className="mt-4">
                                     <img src={previewUrl} alt="Preview" className="w-full h-64 object-cover rounded-xl" />

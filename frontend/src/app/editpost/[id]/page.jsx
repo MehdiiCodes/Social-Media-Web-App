@@ -16,14 +16,13 @@ export default function EditPost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/post/${params.id}`)
+        const res = await axios.get(`http://localhost:5000/post/getbyid/${params.id}`)
         setPost(res.data)
       } catch (error) {
         toast.error('Failed to fetch post. Please try again later.')
       }
       setIsLoading(false)
     }
-
     fetchPost()
   }, [params.id])
 
@@ -31,7 +30,7 @@ export default function EditPost() {
     try {
       await axios.put(`http://localhost:5000/post/update/${params.id}`, updatedPost)
       toast.success('Post updated successfully.')
-      router.push('/')
+      router.push('/feed')
     } catch (error) {
       toast.error('Failed to update post. Please try again.')
     }

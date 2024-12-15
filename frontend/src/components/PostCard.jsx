@@ -29,7 +29,7 @@ const PostCard = ({ post, onLike, onShare, onEdit, onDelete }) => {
           <p className="text-xs text-gray-400">{formatTimestamp(post.createdAt)}</p>
         </div>
         <div className="relative">
-          <button 
+          <button
             className="text-gray-400 hover:text-gray-300"
             onClick={toggleMenu}
           >
@@ -49,15 +49,15 @@ const PostCard = ({ post, onLike, onShare, onEdit, onDelete }) => {
       <div className="p-4">
         <p className="text-gray-300 mb-4">{post.caption}</p>
         {post.image && (
-          <img 
-            src={post.image} 
-            alt="Post content" 
+          <img
+            src={post.image}
+            alt="Post content"
             className="w-full h-64 object-cover rounded-lg"
           />
         )}
       </div>
       <div className="flex justify-between p-4 border-t border-gray-700">
-        <button 
+        <button
           onClick={() => onLike(post._id)}
           className="flex items-center text-gray-400 hover:text-blue-400 transition duration-300"
         >
@@ -66,7 +66,7 @@ const PostCard = ({ post, onLike, onShare, onEdit, onDelete }) => {
           </svg>
           <span>{post.likes || 0}</span>
         </button>
-        <button 
+        <button
           onClick={() => onShare(post._id)}
           className="flex items-center text-gray-400 hover:text-purple-400 transition duration-300"
         >
