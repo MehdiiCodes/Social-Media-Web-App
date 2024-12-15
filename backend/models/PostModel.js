@@ -35,7 +35,6 @@ const mySchema = new Schema({
     },
     community: {
       type: String,
-      ref: "Community", // Reference to the Community model
       required: [true, "Community is required"],
     },
   },

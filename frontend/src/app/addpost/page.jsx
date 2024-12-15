@@ -8,6 +8,9 @@ import { HiOutlinePhotograph, HiOutlineUserCircle, HiOutlineUsers, HiOutlineHash
 import { RiImageAddLine } from "react-icons/ri";
 
 const AddPost = () => {
+
+    
+
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [previewUrl, setPreviewUrl] = useState('');

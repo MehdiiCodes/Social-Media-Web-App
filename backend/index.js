@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const UserRouter = require('./routers/userRouter');
 const PostRouter = require('./routers/postRouter');
+const CommunityRouter = require('./routers/communityRouter');
 
 
 // Initialize the app
@@ -16,6 +17,7 @@ app.use(cors()); // Enable Cross-Origin Resource Sharing
 // Define routes
 app.use('/user', UserRouter); // Routers for user management
 app.use('/post', PostRouter); // Routers for posts (like creating, deleting posts)
+app.use('/community', CommunityRouter);
 
 // Home route
 app.get('/', (req, res) => {
