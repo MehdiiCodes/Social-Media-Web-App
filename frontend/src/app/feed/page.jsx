@@ -21,6 +21,8 @@ const Feed = ({ selCommunity }) => {
     )
   }
 
+  
+
   const fetchPost = async () => {
     setIsLoading(true)
     try {
@@ -62,18 +64,44 @@ const Feed = ({ selCommunity }) => {
     }
   }
 
+  // ... (previous state declarations remain the same)
+
   const handleShare = async (postId) => {
     try {
-      await axios.post(`http://localhost:5000/post/share/${postId}`)
-      setPostList(prevPosts =>
-        prevPosts.map(post =>
-          post._id === postId ? { ...post, shares: (post.shares || 0) + 1 } : post
-        )
-      )
+      const postToShare = postList.find(post => post._id === postId);
+      if (!postToShare) {
+        throw new Error('Post not found');
+      }
+  
+      if (navigator.share) {
+        await navigator.share({
+          title: postToShare.caption,
+          text: postToShare.content,
+          url: `${window.location.origin}/post/${postId}`,
+        });
+        
+        // Update share count on the server
+        const res = await axios.post(`http://localhost:5000/post/share/${postId}`);
+        
+        // Update local state
+        setPostList(prevPosts =>
+          prevPosts.map(post =>
+            post._id === postId ? { ...post, shares: res.data.shares } : post
+          )
+        );
+        
+        toast.success('Post shared successfully!');
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        toast.error('Sharing is not supported on this browser.');
+      }
     } catch (error) {
-      toast.error('Failed to share the post.')
+      if (error.name !== 'AbortError') {
+        toast.error('Failed to share the post.');
+      }
     }
-  }
+  };
+  
 
   const handleEdit = (postId) => {
     // Navigate to edit post page
