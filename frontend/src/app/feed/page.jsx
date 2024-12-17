@@ -7,8 +7,6 @@ import { toast } from 'react-hot-toast'
 import SearchBar from '@/components/SearchBar'
 import PostCard from '@/components/PostCard'
 import Header from '@/components/Header'
-// import SearchBar from './components/'
-// import PostCard from './components/PostCard'
 
 const Feed = ({ selCommunity }) => {
   const [postList, setPostList] = useState([])
