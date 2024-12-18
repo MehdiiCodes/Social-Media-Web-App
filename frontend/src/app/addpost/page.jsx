@@ -3,12 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
-import { IconCheck, IconLoader3 } from "@tabler/icons-react";
-import { HiOutlinePhotograph, HiOutlineUserCircle, HiOutlineUsers, HiOutlineHashtag } from "react-icons/hi";
-import { RiImageAddLine } from "react-icons/ri";
 
 const AddPost = () => {
-
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [previewUrl, setPreviewUrl] = useState('');
@@ -28,6 +24,7 @@ const AddPost = () => {
                 .then((result) => {
                     toast.success('Post Uploaded Successfully');
                     resetForm();
+                    // Assuming you have router imported
                     router.push('/feed');
                 }).catch((err) => {
                     console.log(err);
@@ -47,7 +44,6 @@ const AddPost = () => {
         fetchCommunities();
     }, [])
 
-
     const uploadImage = async (e) => {
         const file = e.target.files[0];
         const formData = new FormData();
@@ -65,14 +61,15 @@ const AddPost = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
             <div className="w-full max-w-md">
-                <div className="bg-gray-800 rounded-3xl shadow-xl overflow-hidden">
-                    <div className="p-8 sm:p-10">
-                        <h1 className="text-3xl font-extrabold text-white text-center mb-8">Create Post</h1>
+                <div className="bg-gray-800 rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-105">
+                    <div className="p-8">
+                        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 text-center mb-6">Create Post</h1>
                         <form onSubmit={postForm.handleSubmit} className="space-y-6">
                             <div className="space-y-4">
-                                <div className="relative">
+                                <div className="group">
+                                    <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-1 transition-colors duration-200 group-hover:text-blue-400">Title</label>
                                     <input
                                         type="text"
                                         id="title"
@@ -81,91 +78,95 @@ const AddPost = () => {
                                         onChange={postForm.handleChange}
                                         placeholder="Add a title..."
                                         required
-                                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 transform group-hover:scale-105"
                                     />
-                                    <HiOutlineHashtag className="absolute right-3 top-3 text-gray-400 text-xl" />
                                 </div>
 
-                                <div className="relative">
+                                <div className="group">
+                                    <label htmlFor="caption" className="block text-sm font-medium text-gray-300 mb-1 transition-colors duration-200 group-hover:text-blue-400">Caption</label>
                                     <textarea
                                         id="caption"
                                         name="caption"
                                         value={postForm.values.caption}
                                         onChange={postForm.handleChange}
                                         placeholder="Write a caption..."
-                                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none"
+                                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 resize-none transform group-hover:scale-105"
                                         rows={4}
                                     ></textarea>
                                 </div>
 
-                                <div className="relative">
+                                <div className="group">
+                                    <label htmlFor="community" className="block text-sm font-medium text-gray-300 mb-1 transition-colors duration-200 group-hover:text-blue-400">Community</label>
                                     <select
-                                        type="text"
                                         id="community"
                                         name="community"
                                         value={postForm.values.community}
                                         onChange={postForm.handleChange}
-                                        placeholder="Enter community..."
                                         required
-                                        className="w-full px-4 py-3 pl-10 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 appearance-none transform group-hover:scale-105"
                                     >
-                                        <option>select community</option>
-                                        {
-                                            communities.map(community => (
-                                                <option key={community._id} value={community.title}>{community.title}</option>
-                                            ))
-                                        }
+                                        <option value="">Select community</option>
+                                        {communities.map(community => (
+                                            <option key={community._id} value={community.title}>{community.title}</option>
+                                        ))}
                                     </select>
-                                    <HiOutlineUsers className="absolute left-3 top-3 text-gray-400 text-xl" />
                                 </div>
 
-                                <div className="relative">
+                                <div className="group">
+                                    <label htmlFor="postedBy" className="block text-sm font-medium text-gray-300 mb-1 transition-colors duration-200 group-hover:text-blue-400">Username</label>
                                     <input
                                         type="text"
                                         id="postedBy"
                                         name="postedBy"
                                         value={postForm.values.postedBy}
                                         onChange={postForm.handleChange}
-                                        placeholder="username..."
+                                        placeholder="Your username..."
                                         required
-                                        className="w-full px-4 py-3 pl-10 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 transform group-hover:scale-105"
                                     />
-                                    <HiOutlineUserCircle className="absolute left-3 top-3 text-gray-400 text-xl" />
                                 </div>
                             </div>
 
-                            <div className="mt-6">
-                                {/* <label htmlFor="image" className="block text-sm font-medium text-gray-300 mb-2">Add Photo</label> */}
-                                <div className="mt-1 flex items-center justify-center">
-                                    <label className="w-full flex flex-col items-center justify-center px-4 py-6 bg-gray-700 text-white rounded-xl tracking-wide border border-gray-600 cursor-pointer hover:bg-gray-600 hover:border-purple-500 transition duration-300 ease-in-out">
-                                        <RiImageAddLine className="w-12 h-12 text-purple-500" />
-                                        <span className="mt-2 text-base leading-normal">Add Photo</span>
-                                        <input
-                                            type="file"
-                                            id="image"
-                                            onChange={uploadImage}
-                                            className="hidden"
-                                        />
-                                    </label>
+                            <div className="group">
+                                <label className="block text-sm font-medium text-gray-300 mb-2 transition-colors duration-200 group-hover:text-blue-400">Add Photo</label>
+                                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-600 border-dashed rounded-md transition-all duration-300 hover:border-blue-500 hover:bg-gray-700 group-hover:scale-105">
+                                    <div className="space-y-1 text-center">
+                                        <svg className="mx-auto h-12 w-12 text-gray-400 transition-colors duration-200 group-hover:text-blue-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        <div className="flex text-sm text-gray-400">
+                                            <label htmlFor="image" className="relative cursor-pointer bg-gray-700 rounded-md font-medium text-blue-400 hover:text-blue-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500 transition-colors duration-200">
+                                                <span>Upload a file</span>
+                                                <input id="image" name="image" type="file" className="sr-only" onChange={uploadImage} />
+                                            </label>
+                                            <p className="pl-1">or drag and drop</p>
+                                        </div>
+                                        <p className="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
+                                    </div>
                                 </div>
                             </div>
 
                             {previewUrl && (
-                                <div className="mt-4">
-                                    <img src={previewUrl} alt="Preview" className="w-full h-64 object-cover rounded-xl" />
+                                <div className="mt-4 group">
+                                    <img src={previewUrl} alt="Preview" className="w-full h-64 object-cover rounded-md transition-all duration-300 transform group-hover:scale-105 group-hover:shadow-lg" />
                                 </div>
                             )}
 
                             <button
                                 type="submit"
                                 disabled={postForm.isSubmitting || !postForm.values.image}
-                                className="w-full py-4 px-4 border border-transparent rounded-xl text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-purple-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
+                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center transform hover:scale-105 hover:shadow-lg"
                             >
-                                {postForm.isSubmitting ? <IconLoader3 className="animate-spin mr-2" /> : <IconCheck className="mr-2" />}
+                                {postForm.isSubmitting ? (
+                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                ) : null}
                                 {postForm.isSubmitting ? 'Sharing...' : 'Share Post'}
                             </button>
                         </form>
-                        {message && <p className="mt-4 text-center text-sm text-gray-300">{message}</p>}
+                        {message && <p className="mt-4 text-center text-sm text-gray-400">{message}</p>}
                     </div>
                 </div>
             </div>
