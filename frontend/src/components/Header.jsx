@@ -12,22 +12,20 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    // Clear user session data (e.g., token or user info)
-    localStorage.removeItem('token'); // Adjust based on your token key
-    localStorage.removeItem('user'); // If you store user data
-    // Redirect to login page
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     router.push('/');
   };
 
   return (
-    <header className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg sticky top-0 z-50 transition-all duration-300 ease-in-out">
+    <header className="bg-black text-white shadow-lg sticky top-0 z-50 transition-all duration-300 ease-in-out">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <Link href="./feed" className="flex items-center space-x-2 group">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 transform group-hover:scale-110 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
             </svg>
-            <span className="text-2xl font-bold group-hover:text-purple-200 transition-colors duration-200">MehdiiCodes</span>
+            <span className="text-2xl font-bold group-hover:text-gray-300 transition-colors duration-200">MehdiiCodes</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-6">
@@ -38,7 +36,7 @@ const Header = () => {
 
           <div className="flex items-center space-x-4">
             <button 
-              className="p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition-all duration-200 transform hover:scale-110 relative"
+              className="p-2 rounded-full hover:bg-white hover:bg-opacity-10 transition-all duration-200 transform hover:scale-110 relative"
               aria-label="Notifications"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -48,12 +46,12 @@ const Header = () => {
             </button>
 
             <div className="hidden md:flex space-x-2">
-              <Link href="/login" className="px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-opacity-90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform">
+              <Link href="/login" className="px-4 py-2 rounded-full bg-white text-black hover:bg-opacity-90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform">
                 Log in
               </Link>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 rounded-full bg-purple-800 hover:bg-purple-700 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform"
+                className="px-4 py-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform"
               >
                 Log out
               </button>
@@ -61,7 +59,7 @@ const Header = () => {
 
             <button 
               onClick={toggleMenu} 
-              className="md:hidden p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition-all duration-200 transform hover:scale-110"
+              className="md:hidden p-2 rounded-full hover:bg-white hover:bg-opacity-10 transition-all duration-200 transform hover:scale-110"
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
             >
@@ -78,12 +76,12 @@ const Header = () => {
             <NavLink href="./addpost" mobile>Add Post</NavLink>
             <NavLink href="/managecommunity" mobile>Manage Community</NavLink>
             <div className="flex space-x-2 mt-4">
-              <Link href="/login" className="flex-1 px-4 py-2 text-center rounded-full bg-white text-purple-600 hover:bg-opacity-90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform">
+              <Link href="/login" className="flex-1 px-4 py-2 text-center rounded-full bg-white text-black hover:bg-opacity-90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform">
                 Log in
               </Link>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2 text-center rounded-full bg-purple-800 hover:bg-purple-700 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform"
+                className="flex-1 px-4 py-2 text-center rounded-full bg-gray-800 hover:bg-gray-700 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform"
               >
                 Log out
               </button>
@@ -96,9 +94,10 @@ const Header = () => {
 };
 
 const NavLink = ({ href, children, mobile }) => (
-  <Link href={href} className={`font-medium hover:text-purple-200 transition-colors duration-200 ${mobile ? 'block py-2 hover:bg-white hover:bg-opacity-10 rounded-lg px-3' : ''}`}>
+  <Link href={href} className={`font-medium hover:text-gray-300 transition-colors duration-200 ${mobile ? 'block py-2 hover:bg-white hover:bg-opacity-10 rounded-lg px-3' : ''}`}>
     {children}
   </Link>
 );
 
 export default Header;
+
