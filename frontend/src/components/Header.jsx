@@ -1,12 +1,22 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -19,11 +29,13 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-900 text-gray-100 shadow-lg sticky top-0 z-50 transition-all duration-300 ease-in-out">
-      <div className="container mx-auto px-4 py-3">
+    <header className={`bg-gray-900 text-gray-100 shadow-lg sticky top-0 z-50 transition-all duration-300 ease-in-out ${scrolled ? 'py-2' : 'py-4'}`}>
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <Link href="./feed" className="flex items-center space-x-2 group">
-            <span className="text-2xl font-bold group-hover:text-teal-400 transition-colors duration-200">MehdiiCodes</span>
+            <span className="text-2xl font-bold group-hover:text-teal-400 transition-colors duration-200">
+              <span className="text-teal-400">Mehdii</span>Codes
+            </span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-6">
@@ -40,13 +52,13 @@ const Header = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
               </svg>
-              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-teal-500 animate-pulse"></span>
+              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-teal-500 animate-ping"></span>
             </button>
 
             <div className="hidden md:block">
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform"
+                className="px-4 py-2 rounded-full bg-teal-500 hover:bg-teal-600 text-white transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform"
               >
                 Log out
               </button>
@@ -73,7 +85,7 @@ const Header = () => {
             <div className="mt-4">
               <button
                 onClick={handleLogout}
-                className="w-full px-4 py-2 text-center rounded-full bg-gray-800 hover:bg-gray-700 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform"
+                className="w-full px-4 py-2 text-center rounded-full bg-teal-500 hover:bg-teal-600 text-white transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform"
               >
                 Log out
               </button>
