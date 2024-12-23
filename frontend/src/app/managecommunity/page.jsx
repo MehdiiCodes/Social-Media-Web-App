@@ -273,4 +273,3 @@ const ManageCommunity = () => {
 };
 
 export default ManageCommunity;
-
