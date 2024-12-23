@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { IconCheck, IconLoader3 } from "@tabler/icons-react";
 import { HiOutlinePhotograph, HiOutlineUserCircle, HiOutlineUsers, HiOutlineHashtag } from "react-icons/hi";
 import { RiImageAddLine } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 
 const AddPost = () => {
 
@@ -13,6 +14,8 @@ const AddPost = () => {
     const [message, setMessage] = useState("");
     const [previewUrl, setPreviewUrl] = useState('');
     const [communities, setCommunities] = useState([]);
+
+    const router = useRouter()
 
     const postForm = useFormik({
         initialValues: {
