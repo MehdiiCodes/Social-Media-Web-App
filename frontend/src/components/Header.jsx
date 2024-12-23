@@ -29,12 +29,12 @@ const Header = () => {
   };
 
   return (
-    <header className={`bg-gray-900 text-gray-100 shadow-lg sticky top-0 z-50 transition-all duration-300 ease-in-out ${scrolled ? 'py-2' : 'py-4'}`}>
+    <header className={`bg-gradient-to-r from-gray-900 via-gray-800 to-black text-gray-100 shadow-lg sticky top-0 z-50 transition-all duration-300 ease-in-out ${scrolled ? 'py-2' : 'py-4'}`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <Link href="./feed" className="flex items-center space-x-2 group">
-            <span className="text-2xl font-bold group-hover:text-teal-400 transition-colors duration-200">
-              <span className="text-teal-400">Mehdii</span>Codes
+            <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 transition-colors duration-200">
+              MehdiiCodes
             </span>
           </Link>
 
@@ -46,19 +46,19 @@ const Header = () => {
 
           <div className="flex items-center space-x-4">
             <button 
-              className="p-2 rounded-full hover:bg-gray-800 transition-all duration-200 transform hover:scale-110 relative"
+              className="p-2 rounded-full hover:bg-gray-700 transition-all duration-200 transform hover:scale-110 relative"
               aria-label="Notifications"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
               </svg>
-              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-teal-500 animate-ping"></span>
+              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-purple-500 animate-ping"></span>
             </button>
 
             <div className="hidden md:block">
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 rounded-full bg-teal-500 hover:bg-teal-600 text-white transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform"
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white font-bold transition-all duration-200 hover:shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50"
               >
                 Log out
               </button>
@@ -66,7 +66,7 @@ const Header = () => {
 
             <button 
               onClick={toggleMenu} 
-              className="md:hidden p-2 rounded-full hover:bg-gray-800 transition-all duration-200 transform hover:scale-110"
+              className="md:hidden p-2 rounded-full hover:bg-gray-700 transition-all duration-200 transform hover:scale-110"
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
             >
@@ -85,7 +85,7 @@ const Header = () => {
             <div className="mt-4">
               <button
                 onClick={handleLogout}
-                className="w-full px-4 py-2 text-center rounded-full bg-teal-500 hover:bg-teal-600 text-white transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform"
+                className="w-full px-4 py-2 text-center rounded-xl bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white font-bold transition-all duration-200 hover:shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50"
               >
                 Log out
               </button>
@@ -100,8 +100,8 @@ const Header = () => {
 const NavLink = ({ href, children, mobile }) => (
   <Link 
     href={href} 
-    className={`font-medium hover:text-teal-400 transition-colors duration-200 ${
-      mobile ? 'block py-2 hover:bg-gray-800 rounded-lg px-3' : ''
+    className={`font-medium text-gray-300 hover:text-white transition-colors duration-200 ${
+      mobile ? 'block py-2 hover:bg-gray-700 rounded-lg px-3' : ''
     }`}
   >
     {children}
