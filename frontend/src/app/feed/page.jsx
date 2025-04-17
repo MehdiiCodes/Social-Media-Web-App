@@ -8,6 +8,10 @@ import SearchBar from '@/components/SearchBar'
 import PostCard from '@/components/PostCard'
 import Header from '@/components/Header'
 
+// if( !user.isActive ) {
+//   alert(`Your account is deactivated. Reason: ${User.deactivateReason}`);
+// };
+
 const Feed = ({ selCommunity }) => {
   const [postList, setPostList] = useState([])
   const [masterList, setMasterList] = useState([])
@@ -20,8 +24,6 @@ const Feed = ({ selCommunity }) => {
       masterList.filter((post) => post.caption.toLowerCase().includes(v.toLowerCase()))
     )
   }
-
-  
 
   const fetchPost = async () => {
     setIsLoading(true)

@@ -1,6 +1,8 @@
 const express = require('express');
 const Model = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
+const { model } = require('mongoose');
+const User = require('../models/UserModel');
 require('dotenv').config();
 
 const router = express.Router();
@@ -22,6 +24,22 @@ router.post('/add', (req, res) => {
         });
 });
 
+// Update user status by Admin
+router.put('/update-status/:id', async (req, res) => {
+    try {
+        const { isActive, deactivateReason } = req.body;
+
+        const user = await Model.findByIdAndUpdate(req.params.id, {
+            isActive,
+            deactivateReason: isActive ? '' : deactivateReason
+        }, { new : true });
+
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ message: 'Error updating status'});
+    }
+        });
+    
 // getall
 router.get('/getall', (req, res) => {
 
