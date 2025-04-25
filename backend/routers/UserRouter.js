@@ -24,21 +24,25 @@ router.post('/add', (req, res) => {
         });
 });
 
-// Update user status by Admin
-router.put('/update-status/:id', async (req, res) => {
+// Activate User
+router.put("/:id/activate", async (req, res) => {
     try {
-        const { isActive, deactivateReason } = req.body;
-
-        const user = await Model.findByIdAndUpdate(req.params.id, {
-            isActive,
-            deactivateReason: isActive ? '' : deactivateReason
-        }, { new : true });
-
+        const user = await User.findByIdAndUpdate(req.params.id, { isActive: true }, { new: true });
         res.json(user);
     } catch (err) {
-        res.status(500).json({ message: 'Error updating status'});
+        res.status(500).json({ error: err.message });
     }
-        });
+});
+
+// Deactivate User
+router.put("/:id/deactivate", async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
     
 // getall
 router.get('/getall', (req, res) => {

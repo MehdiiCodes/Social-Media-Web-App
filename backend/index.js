@@ -1,7 +1,7 @@
 // Import required modules
 const express = require('express');
 const cors = require('cors');
-const UserRouter = require('./routers/userRouter');
+const userRouter = require('./routers/UserRouter');
 const PostRouter = require('./routers/postRouter');
 const CommunityRouter = require('./routers/communityRouter');
 

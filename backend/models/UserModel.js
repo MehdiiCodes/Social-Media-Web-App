@@ -32,14 +32,9 @@ const mySchema = new Schema ({
       type: Date,
       default: Date.now,
     },
-    isActive: {
-      type: Boolean,
-      default: false,
-    },
-    deactivationReason: {
-      type: String,
-      default: '',
-    },
+    name: String,
+    email: String,
+    isActive: { type: Boolean, default: false } // Default is false
   },
   {
     timestamps: true, // Automatically create `createdAt` and `updatedAt`
