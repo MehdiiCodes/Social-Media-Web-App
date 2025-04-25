@@ -20,14 +20,22 @@ const Login = () => {
     },
     onSubmit: (values) => {
       console.log(values);
-      axios.post('http://localhost:5000/user/authenticate', values)
+      axios
+        .post('http://localhost:5000/user/authenticate', values)
         .then((response) => {
           toast.success('User Login Successfully');
           localStorage.setItem('token', response.data.token);
           router.push('/feed');
-        }).catch((err) => {
+        })
+        .catch((err) => {
           console.log(err);
-          toast.error(err?.response?.data?.message || 'Something went Wrong');
+    
+          // Check if the account is deactivated
+          if (err.response?.status === 403) {
+            toast.error(err.response?.data?.message || 'Your account has been deactivated');
+          } else {
+            toast.error(err.response?.data?.message || 'Something went Wrong');
+          }
         });
     }
   })

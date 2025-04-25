@@ -177,7 +177,7 @@ const Feed = ({ selCommunity }) => {
         )}
 
         {renderPosts()}
-        {/* <FeatureToggle id="userId" /> */}
+        <FeatureToggle id="userId" />
       </div>
     </div>
   )

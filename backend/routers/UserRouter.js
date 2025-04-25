@@ -35,24 +35,34 @@ router.get("/all", async (req, res) => {
 });
 
 // Activate User
-router.put("/:id/activate", async (req, res) => {
+router.post('/activate', async (req, res) => {
+    const { userId } = req.body;
+  
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, { isActive: true }, { new: true });
-        res.json(user);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+      const user = await User.findByIdAndUpdate(userId, { isActive: true });
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      res.json({ message: 'User activated successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Server error' });
     }
-});
-
-// Deactivate User
-router.put("/:id/deactivate", async (req, res) => {
+  });
+  
+  // Deactivate User
+  router.post('/deactivate', async (req, res) => {
+    const { userId, reason } = req.body;
+  
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
-        res.json(user);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+      const user = await User.findByIdAndUpdate(userId, { isActive: false, deactivationReason: reason });
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      res.json({ message: 'User deactivated successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Server error' });
     }
-});
+  });
     
 // getall
 router.get('/getall', (req, res) => {
@@ -109,37 +119,37 @@ router.delete('/delete/:id', (req, res) => {
         });
 });
 
-router.post('/authenticate', (req, res) => {
-    Model.findOne(req.body)
-    .then((result) => {
-        if (result) {
-            // email and password matched
-            // generate token
-
-            const {_id, email, password} = result;
-            const payload = { _id, email, password }
-
-            jwt.sign(
-                payload,
-                process.env.JWT_SECRET,
-                { expiresIn: '6h'},
-                (err, token) => {
-                    if (err) {
-                        console.log(err);
-                        res.status(500).json({ err });
-                    } else {
-                        res.status(200).json({ token });
-                    }
-                }
-            )
-
-        } else {
-            res.status(401).json({message: 'Invalid email or password'});
-        }
-    }).catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-    });
-})
+// Authenticate User
+router.post('/authenticate', async (req, res) => {
+    const { email, password } = req.body;
+  
+    try {
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Check if the account is deactivated
+      if (!user.isActive) {
+        return res.status(403).json({ message: `Your account is deactivated: ${user.deactivationReason || 'No reason provided'}` });
+      }
+  
+      // Validate password (assuming a comparePassword method)
+      const isPasswordValid = await user.comparePassword(password);
+  
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+      }
+  
+      // Generate token (assuming a generateToken method)
+      const token = user.generateToken();
+  
+      res.json({ token });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
 
 module.exports = router;
