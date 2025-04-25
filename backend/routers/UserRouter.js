@@ -24,6 +24,16 @@ router.post('/add', (req, res) => {
         });
 });
 
+router.get("/all", async (req, res) => {
+    try {
+        const users = await User.find({}, 
+            { name: 1, email: 1, isActive: 1, isLocked: 1, lockReason: 1 });
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Activate User
 router.put("/:id/activate", async (req, res) => {
     try {

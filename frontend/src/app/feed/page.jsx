@@ -7,10 +7,8 @@ import { toast } from 'react-hot-toast'
 import SearchBar from '@/components/SearchBar'
 import PostCard from '@/components/PostCard'
 import Header from '@/components/Header'
+import FeatureToggle from '@/components/FeatureToggle'
 
-// if( !user.isActive ) {
-//   alert(`Your account is deactivated. Reason: ${User.deactivateReason}`);
-// };
 
 const Feed = ({ selCommunity }) => {
   const [postList, setPostList] = useState([])
@@ -179,6 +177,7 @@ const Feed = ({ selCommunity }) => {
         )}
 
         {renderPosts()}
+        {/* <FeatureToggle id="userId" /> */}
       </div>
     </div>
   )
