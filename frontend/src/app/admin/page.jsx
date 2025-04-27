@@ -21,7 +21,7 @@ const AdminDashboard = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/users/all");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/getall`);
         const data = await response.json();
         setUsers(data);
 
@@ -54,12 +54,12 @@ const AdminDashboard = () => {
 
   const handleAction = async (userId, action) => {
     try {
-      const response = await fetch(`/api/users/${action}`, {
-        method: "POST",
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/activate/${userId}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId }),
+        body: JSON.stringify({ isActive: action }),
       });
 
       if (response.ok) {
@@ -186,7 +186,7 @@ const AdminDashboard = () => {
                               onClick={() =>
                                 handleAction(
                                   user._id,
-                                  user.isActive ? "deactivate" : "activate"
+                                  user.isActive
                                 )
                               }
                               className={`px-3 py-1 rounded-full ${
