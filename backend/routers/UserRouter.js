@@ -124,7 +124,7 @@ router.post('/authenticate', (req, res) => {
       .then((result) => {
 
           if (result) {
-              // login success - generate token
+            //   login success - generate token
 
               const { _id, name, email } = result;
               const payload = { _id, name, email };
@@ -144,7 +144,8 @@ router.post('/authenticate', (req, res) => {
               )
 
           } else {
-              //  login failed
+            //    login failed
+            //    login failed
               res.status(401).json({ message: 'Invalid credentials' });
           }
 
